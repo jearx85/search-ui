@@ -1,4 +1,9 @@
 .cont-card{
-    margin: 10px;
+    margin: 50px 0 20px;
     padding: 10px;
+    
 }
+
+.card {
+    margin-bottom: 20px; /* Agrega un margen inferior para separar las tarjetas */
+  }

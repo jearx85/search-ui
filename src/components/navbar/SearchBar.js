@@ -5,11 +5,11 @@ import './SeacrhBar.css';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
-  const [titulo, setTitulo] = useState(''); // Declarar el estado para titulo
+  const [data, setData] = useState([]); // Declarar el estado para titulo
 
-  const search = document.getElementById('search-box');
 
   const handleSearch = () => {
+    const search = document.getElementById('search-box');
     const valor_busqueda = search.value;
     console.log(valor_busqueda);
 
@@ -25,9 +25,11 @@ export default function SearchBar() {
         return response.json();
       })
       .then((data) => {
-        const titulo = data.hits[0]._source.title;
-        console.log(data.hits[0]._source.title); // Aquí puedes hacer lo que desees con los datos de la respuesta
-        setTitulo(titulo); // Actualiza el estado con el valor del título
+        const results = data.hits.map((item) => ({
+          titulo: item._source.title,
+          // Otras propiedades que desees extraer del objeto
+        })); // Aquí puedes hacer lo que desees con los datos de la respuesta
+        setData(results); // Actualiza el estado con el valor del título
         setShowResults(true);
       })
       .catch((error) => {
@@ -58,7 +60,7 @@ export default function SearchBar() {
         </div>
       </nav>
 
-      {showResults && <ShowResults titulo={titulo} />}
+      {showResults && <ShowResults data={data} />}
     </div>
   );
 }
