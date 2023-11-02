@@ -1,0 +1,5 @@
+.custom-form{
+    width: 90%; /* Ocupa todo el ancho disponible */
+    margin: 0; /* Elimina márgenes para ajustar al contenedor */
+    padding: 10px; /* Elimina relleno para ajustar al contenedor */
+}
