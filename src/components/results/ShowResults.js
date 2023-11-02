@@ -1,16 +1,19 @@
 import React from 'react'
+import './ShowResults.css'
 
-export default function ShowResults() {
+export default function ShowResults({ titulo }) {
   return (
     <div className="container">
-        <div className="card">
-            <h5 className="card-header">Featured</h5>
+      <div className="cont-card">
+      <div className="card">
+            <h5 className="card-header">{titulo}</h5>
             <div className="card-body">
-                <h5 className="card-title">Special title treatment</h5>
-                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                
+                <h5 className="card-title">Resumen</h5>
+                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>  
+                <p className="card-text">url: </p>  
             </div>
         </div>
+      </div>
     </div>
   )
 }

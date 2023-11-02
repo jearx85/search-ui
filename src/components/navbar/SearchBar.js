@@ -5,38 +5,60 @@ import './SeacrhBar.css';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
+  const [titulo, setTitulo] = useState(''); // Declarar el estado para titulo
+
+  const search = document.getElementById('search-box');
 
   const handleSearch = () => {
-    // Realiza alguna lógica de búsqueda aquí si es necesario
-    // Por ejemplo, puedes hacer una llamada a una API
-    // Luego, muestra los resultados al configurar showResults en true
-    setShowResults(true);
+    const valor_busqueda = search.value;
+    console.log(valor_busqueda);
+
+    const url = `http://192.168.50.230:8087/query/${valor_busqueda}`;
+
+    fetch(url, {
+      method: 'GET',
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const titulo = data.hits[0]._source.title;
+        console.log(data.hits[0]._source.title); // Aquí puedes hacer lo que desees con los datos de la respuesta
+        setTitulo(titulo); // Actualiza el estado con el valor del título
+        setShowResults(true);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
+      });
   };
 
   return (
     <div>
-    <nav className="navbar bg-body-tertiary">
-      <div className="container-fluid">
-        <nav className="navbar bg-body-tertiary">
-          <div className="container">
-            <div className="navbar-brand" href="#">
-              <img src={logo} alt="Logo" width="50" height="50" />
+      <nav className="navbar bg-body-tertiary">
+        <div className="container-fluid">
+          <nav className="navbar bg-body-tertiary">
+            <div className="container">
+              <div className="navbar-brand" href="#">
+                <img src={logo} alt="Logo" width="50" height="50" />
+              </div>
             </div>
-          </div>
-        </nav>
-        <form className="d-flex custom-form">
-          <div className="input-group"> {/* Utilizamos input-group de Bootstrap */}
-            <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success" type="button" onClick={handleSearch}>
-              Search
-            </button>
-          </div>
-        </form>
-      </div>
-    </nav>
-  
-    {showResults && <ShowResults />}
-  </div>
-  
+          </nav>
+          <form className="d-flex custom-form">
+            <div className="input-group">
+              <input id="search-box" className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+              <button className="btn btn-primary" type="button" onClick={handleSearch}>
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </nav>
+
+      {showResults && <ShowResults titulo={titulo} />}
+    </div>
   );
 }
