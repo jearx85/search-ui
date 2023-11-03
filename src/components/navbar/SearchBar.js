@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import logo from '../../img/logo1.png';
+import logo from '../../img/nadhis-logo.png';
 import ShowResults from '../../components/results/ShowResults';
+import Filtros from '../../components/filters/Filtros'
 import './SeacrhBar.css';
 
 export default function SearchBar() {
@@ -27,8 +28,11 @@ export default function SearchBar() {
       .then((data) => {
         const results = data.hits.map((item) => ({
           titulo: item._source.title,
+          resumen: item._source.resumen
+          
           // Otras propiedades que desees extraer del objeto
         })); // Aquí puedes hacer lo que desees con los datos de la respuesta
+        console.log(data)
         setData(results); // Actualiza el estado con el valor del título
         setShowResults(true);
       })
@@ -36,59 +40,26 @@ export default function SearchBar() {
         console.error('Error:', error);
         // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
       });
-  };
-  const handleEnterPress = (event) => {
-    if (event.key === 'Enter') {
-      // Si la tecla presionada es Enter, ejecuta la búsqueda
      
-      handleSearch();
-    }
   };
+  // const handleEnterPress = (event) => {
+  //   if (event.key === 'Enter') {
+  //     // Si la tecla presionada es Enter, ejecuta la búsqueda
+     
+  //     handleSearch();
+  //   }
+  // };
 
   return (
     <div>
-      <nav className="navbar bg-body-tertiary">
+      <nav className="navbar fixed-top bg-body-tertiary">
         <div className="container-fluid">
-          <nav className="navbar bg-body-tertiary">
-            <div className="container">
-              <div className="navbar-brand" href="#">
-                <div className="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-                     <img src={logo} alt="Logo" width="50" height="50" />
+        <div className="imagen">
+                     <img src={logo} alt="Logo" width="150" height="50" />
                 </div>
-                <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                  <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Filtros</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                  <hr/>
-                  <ul className="list-group">
-                        <li className="list-group-item active" aria-current="true">An active item</li>
-                        <li className="list-group-item">A second item</li>
-                        <li className="list-group-item">A third item</li>
-                        <li className="list-group-item">A fourth item</li>
-                        <li className="list-group-item">And a fifth one</li>
-                  </ul>
-                      <br/>
-                      <hr/>
-                      <div className="form-check">
-                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                      <label className="form-check-label" for="flexRadioDefault1">
-                        Default radio
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
-                      <label className="form-check-label" for="flexRadioDefault2">
-                        Default checked radio
-                      </label>
-                    </div>   
-                </div>
-              </div>
-            </div>
-          </nav>
           <form className="d-flex custom-form">
             <div className="input-group">
-              <input id="search-box" className="form-control me-2" type="search" placeholder="Search" aria-label="Search"  onKeyDown={handleEnterPress}/>
+              <input id="search-box" className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
               <button className="btn btn-primary" type="button" onClick={handleSearch}>
                 Search
               </button>
@@ -96,8 +67,15 @@ export default function SearchBar() {
           </form>
         </div>
       </nav>
+          <div className='row'>
+              {/* <div className="col-sm-4">
+                <Filtros data={data}/>
+              </div> */}
+              <div className="col-sm-12">
+                  {showResults && <ShowResults data={data} />}
 
-      {showResults && <ShowResults data={data} />}
+              </div>
+          </div>
     </div>
   );
 }

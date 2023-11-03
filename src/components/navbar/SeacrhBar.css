@@ -3,3 +3,11 @@
     margin: 0; /* Elimina márgenes para ajustar al contenedor */
     padding: 10px; /* Elimina relleno para ajustar al contenedor */
 }
+
+.list-group{
+    padding: 5%;
+}
+
+.check{
+    padding: 5%;
+}

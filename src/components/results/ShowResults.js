@@ -10,9 +10,9 @@ export default function ShowResults({ data }) {
             <h5 className="card-header">{item.titulo}</h5>
             <div className="card-body">
                 <h5 className="card-title">Resumen</h5>
-                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>  
+                <p className="card-text">{item.resumen}</p>  
                 {/* <p className="card-text">url: <a href={item.url}>{item.url}</a></p>  */}
-                <p className="card-text">url: <a href="https://getbootstrap.com/docs/5.3/components/navbar/">https://getbootstrap.com/docs/5.3/components/navbar/</a></p> 
+                <p className="card-text">url: <a href="https://getbootstrap.com/docs/5.3/components/navbar/" target='blank'>https://getbootstrap.com/docs/5.3/components/navbar/</a></p> 
             </div>
         </div>
         ))}
