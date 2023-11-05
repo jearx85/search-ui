@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../img/nadhis-logo.png';
 import ShowResults from '../../components/results/ShowResults';
-import Filtros from '../../components/filters/Filtros'
-import './SeacrhBar.css';
+import Filtros from '../../components/filters/Filtros';
+import './SearchBar.css';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
-  const [data, setData] = useState([]); // Declarar el estado para titulo
+  const [data, setData] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [searchValue, setSearchValue] = useState('');
 
+  const handleFilterChange = (filter) => {
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [filter]: !prevFilters[filter],
+    }));
+    if (!selectedFilters[filter]) {
+      console.log(`Checkbox seleccionado: ${filter}`);
+    }
+  };
 
   const handleSearch = () => {
-    const search = document.getElementById('search-box');
-    const valor_busqueda = search.value;
-    console.log(valor_busqueda);
-
-    const url = `http://192.168.50.230:8087/query/${valor_busqueda}`;
+    const url = `http://192.168.50.230:8087/query/${searchValue}`;
 
     fetch(url, {
       method: 'GET',
@@ -25,41 +32,40 @@ export default function SearchBar() {
         }
         return response.json();
       })
-      .then((data) => {
-        const results = data.hits.map((item) => ({
+      .then((apiData) => {
+        const results = apiData.hits.map((item) => ({
           titulo: item._source.title,
-          resumen: item._source.resumen
-          
-          // Otras propiedades que desees extraer del objeto
-        })); // Aquí puedes hacer lo que desees con los datos de la respuesta
-        console.log(data)
-        setData(results); // Actualiza el estado con el valor del título
+        }));
+        setData(results);
         setShowResults(true);
       })
       .catch((error) => {
         console.error('Error:', error);
-        // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
       });
-     
   };
-  // const handleEnterPress = (event) => {
-  //   if (event.key === 'Enter') {
-  //     // Si la tecla presionada es Enter, ejecuta la búsqueda
-     
-  //     handleSearch();
-  //   }
-  // };
+
+  useEffect(() => {
+    // Initialize data here if needed
+  }, []);
 
   return (
     <div>
       <nav className="navbar fixed-top bg-body-tertiary">
         <div className="container-fluid">
-        <div className="imagen">
-                     <img src={logo} alt="Logo" width="150" height="50" />
-                </div>
+          <div className="imagen">
+            <img src={logo} alt="Logo" width="140" height="50" />
+          </div>
           <form className="d-flex custom-form">
             <div className="input-group">
-              <input id="search-box" className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+              <input
+                id="search-box"
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
               <button className="btn btn-primary" type="button" onClick={handleSearch}>
                 Search
               </button>
@@ -67,15 +73,16 @@ export default function SearchBar() {
           </form>
         </div>
       </nav>
-          <div className='row'>
-              {/* <div className="col-sm-4">
-                <Filtros data={data}/>
-              </div> */}
-              <div className="col-sm-12">
-                  {showResults && <ShowResults data={data} />}
-
-              </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-4">
+            <Filtros data={data} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
           </div>
+          <div className="col-sm-8">
+            {showResults && <ShowResults data={data}/>}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
