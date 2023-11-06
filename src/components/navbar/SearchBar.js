@@ -73,11 +73,15 @@ export default function SearchBar() {
         return response.json();
       })
       .then((apiData) => {
-        const resultado = apiData.results.map((item) => ({
-          titulo: item._source.Title,
-        }));
-        setTitles(resultado);
-        setShowResults(true);
+        if (apiData.results && apiData.results.length > 0) {
+          const resultado = apiData.results.map((item) => ({
+            titulo: item.Title, // Accede directamente a la propiedad Title
+          }));
+          setTitles(resultado);
+          setShowResults(true);
+        } else {
+          console.error('No se encontraron resultados válidos en la respuesta de la API.');
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
