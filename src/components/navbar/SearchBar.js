@@ -1,22 +1,37 @@
-import React, { useState } from 'react';
-import logo from '../../img/logo1.png';
+import React, { useState, useEffect } from 'react';
+import logo from '../../img/logo-nadhis.png';
 import ShowResults from '../../components/results/ShowResults';
-import './SeacrhBar.css';
+import Filtros from '../../components/filters/Filtros';
+import './SearchBar.css';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
-  const [data, setData] = useState([]); // Declarar el estado para titulo
+  const [data, setData] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [searchValue, setSearchValue] = useState('');
+  const [titles, setTitles] = useState([]);
 
+
+  const handleFilterChange = (filter) => {
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [filter]: !prevFilters[filter],
+    }));
+    if (!selectedFilters[filter]) {
+      console.log(`Checkbox seleccionado: ${filter}`);
+    }
+  };
 
   const handleSearch = () => {
-    const search = document.getElementById('search-box');
-    const valor_busqueda = search.value;
-    console.log(valor_busqueda);
-
-    const url = `http://192.168.50.230:8087/query/${valor_busqueda}`;
+    // const url = `http://192.168.50.230:8087/query/${searchValue}`;
+    const url = `http://10.11.230.23:3002/api/as/v1/engines/{nadhis-pruebas-documentos}/documents/list`;
 
     fetch(url, {
       method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer search-ii7k98zgbq51hdvso6puyt9o' 
+      }
     })
       .then((response) => {
         if (!response.ok) {
@@ -24,71 +39,69 @@ export default function SearchBar() {
         }
         return response.json();
       })
-      .then((data) => {
-        const results = data.hits.map((item) => ({
+      .then((apiData) => {
+        const results = apiData.hits.map((item) => ({
           titulo: item._source.title,
-          // Otras propiedades que desees extraer del objeto
-        })); // Aquí puedes hacer lo que desees con los datos de la respuesta
-        setData(results); // Actualiza el estado con el valor del título
+        }));
+        setData(results);
         setShowResults(true);
       })
       .catch((error) => {
         console.error('Error:', error);
-        // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
       });
   };
-  const handleEnterPress = (event) => {
-    if (event.key === 'Enter') {
-      // Si la tecla presionada es Enter, ejecuta la búsqueda
-     
-      handleSearch();
-    }
-  };
+
+  useEffect(() => {
+    // Initialize data here if needed
+  }, []);
+
+  useEffect(() => {
+    // Realiza la llamada a la API y muestra la lista de documentos en la consola
+    const url = `http://10.11.230.23:3002/api/as/v1/engines/nadhis-pruebas-documentos/documents/list`;
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer private-883611duideiq7kv66vmtjfb',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((apiData) => {
+        const resultado = apiData.results.map((item) => ({
+          titulo: item._source.Title,
+        }));
+        setTitles(resultado);
+        setShowResults(true);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, []);
 
   return (
     <div>
-      <nav className="navbar bg-body-tertiary">
+      <nav className="navbar fixed-top bg-body-tertiary">
         <div className="container-fluid">
-          <nav className="navbar bg-body-tertiary">
-            <div className="container">
-              <div className="navbar-brand" href="#">
-                <div className="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-                     <img src={logo} alt="Logo" width="50" height="50" />
-                </div>
-                <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                  <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Filtros</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                  <hr/>
-                  <ul className="list-group">
-                        <li className="list-group-item active" aria-current="true">An active item</li>
-                        <li className="list-group-item">A second item</li>
-                        <li className="list-group-item">A third item</li>
-                        <li className="list-group-item">A fourth item</li>
-                        <li className="list-group-item">And a fifth one</li>
-                  </ul>
-                      <br/>
-                      <hr/>
-                      <div className="form-check">
-                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-                      <label className="form-check-label" for="flexRadioDefault1">
-                        Default radio
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked/>
-                      <label className="form-check-label" for="flexRadioDefault2">
-                        Default checked radio
-                      </label>
-                    </div>   
-                </div>
-              </div>
-            </div>
-          </nav>
+          <div className="imagen">
+            <img src={logo} alt="Logo" width="140" height="50" />
+          </div>
           <form className="d-flex custom-form">
             <div className="input-group">
-              <input id="search-box" className="form-control me-2" type="search" placeholder="Search" aria-label="Search"  onKeyDown={handleEnterPress}/>
+              <input
+                id="search-box"
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
               <button className="btn btn-primary" type="button" onClick={handleSearch}>
                 Search
               </button>
@@ -96,8 +109,16 @@ export default function SearchBar() {
           </form>
         </div>
       </nav>
-
-      {showResults && <ShowResults data={data} />}
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-4">
+            <Filtros data={titles} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
+          </div>
+          <div className="col-sm-8">
+            {showResults && <ShowResults data={titles}/>}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
