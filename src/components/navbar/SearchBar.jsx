@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from '../../img/logo-nadhis.png';
 import ShowResults from '../results/ShowResults';
 import Filtros from '../filters/Filtros';
@@ -14,21 +14,22 @@ export default function SearchBar() {
 //==================================================================
   const handleFilterChange = (filter) => {
     setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
+      prevFilters,
       [filter]: !prevFilters[filter],
     }));
-    if (!selectedFilters[filter]) {
+    if (selectedFilters[filter]) {
       console.log(`Checkbox seleccionado: ${filter}`);
     }
   };
-  const uniqueData = Array.from(new Set(data));
+  const extensions = data.map(item => item.Extención);
+  const uniqueData = [...new Set(extensions)];
   // const filteredTitles = titles.filter((Categorias) => Categorias !== undefined);
 
 //===========================================================================
 
-const handleSearch = () => {
+const handleSearch = (event) => {
+    event.preventDefault();
     const valorBusqueda = document.getElementById("search-box").value
-    console.log(valorBusqueda)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
@@ -53,13 +54,14 @@ const handleSearch = () => {
         return response.json();
       })
       .then((apiData) => {
-        const results = apiData.results.map((id, Title, Content, Path) => ({
-          id: id.raw,
-          Title: Title.raw, 
-          Content: Content.raw,
-          Path: Path.raw,
+        const results = apiData.results.map((item) => ({
+          id: item.id.raw,
+          Title: item.Title.raw,
+          Content: item.Content.raw,
+          Path: item.Path.raw,
+          Categorias: item.Categorias.raw,
+          Extención: item.Extención.raw,
         }));
-        console.log(apiData.results[0].Path.raw)
         setData(results);
         setShowResults(true);
       })
@@ -67,50 +69,6 @@ const handleSearch = () => {
         console.error('Error:', error);
       });
   };
-//===============================================================================
-  // const ListarDocs= () => {
-      
-
-  // }
-
-//===============================================================================
-  // useEffect(() => {
-  //   // Realiza la llamada a la API y muestra la lista de documentos en la consola
-  //   const url = `http://10.11.230.23:3002/api/as/v1/engines/nadhis-documentos/documents/list`;
-
-  //   fetch(url, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer private-883611duideiq7kv66vmtjfb',
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((apiData) => {
-  //       if (apiData.results && apiData.results.length > 0) {
-  //         const resultado = apiData.results.map(({id, Title, Content, Path, Categorias}) => ({
-  //           id,
-  //           Title, 
-  //           Content,
-  //           Path,
-  //           Categorias,
-  //         }));
-         
-  //         setTitles(resultado);
-  //         setShowResults(true);
-  //       } else {
-  //         console.error('No se encontraron resultados válidos en la respuesta de la API.');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //     });
-  // }, []);
 
   return (
     <div>
@@ -119,7 +77,7 @@ const handleSearch = () => {
           <div className="imagen">
             <img src={logo} alt="Logo" width="140" height="50" />
           </div>
-          <form className="d-flex custom-form">
+          <form className="d-flex custom-form" onSubmit={handleSearch}>
             <div className="input-group">
               <input
                 id="search-box"
@@ -130,7 +88,7 @@ const handleSearch = () => {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
-              <button className="btn btn-primary" type="button" onClick={handleSearch}>
+              <button className="btn btn-primary" type="button" onClick={handleSearch} onKeyDown={(e) => {console.log(e)}}>
                 Search
               </button>
             </div>
@@ -139,10 +97,10 @@ const handleSearch = () => {
       </nav>
       <div className="container">
         <div className="row">
-          <div className="col-sm-4">
-            <Filtros data={data} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
+          <div className="col-md-3">
+            <Filtros data={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
           </div>
-          <div className="col-sm-8">
+          <div className="col-sm-9">
             {showResults && <ShowResults data={data} />}
           </div>
         </div>
