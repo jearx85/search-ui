@@ -6,7 +6,7 @@ import './SearchBar.css';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
-  const [data, setData] = useState([]);
+  const [ setData] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const [titles, setTitles] = useState([]);
@@ -21,10 +21,15 @@ export default function SearchBar() {
       console.log(`Checkbox seleccionado: ${filter}`);
     }
   };
+  // const uniqueData = Array.from(new Set(titles));
+  // console.log(uniqueData);
+
+  // const filteredTitles = titles.filter((item) => item.usuario !== undefined);
+  // console.log(filteredTitles)
 
   const handleSearch = () => {
     // const url = `http://192.168.50.230:8087/query/${searchValue}`;
-    const url = `http://10.11.230.23:3002/api/as/v1/engines/{nadhis-pruebas-documentos}/documents/list`;
+    const url = `http://10.11.230.23:3002/api/as/v1/engines/nadhis-pruebas-documentos/documents?`;
 
     fetch(url, {
       method: 'GET',
@@ -52,12 +57,8 @@ export default function SearchBar() {
   };
 
   useEffect(() => {
-    // Initialize data here if needed
-  }, []);
-
-  useEffect(() => {
     // Realiza la llamada a la API y muestra la lista de documentos en la consola
-    const url = `http://10.11.230.23:3002/api/as/v1/engines/nadhis-pruebas-documentos/documents/list`;
+    const url = `http://10.11.230.23:3002/api/as/v1/engines/vectors-index-2/documents/list`;
 
     fetch(url, {
       method: 'GET',
@@ -75,7 +76,10 @@ export default function SearchBar() {
       .then((apiData) => {
         if (apiData.results && apiData.results.length > 0) {
           const resultado = apiData.results.map((item) => ({
-            titulo: item.Title, // Accede directamente a la propiedad Title
+            titulo: item.title, // Accede directamente a la propiedad Title
+            contenido: item.content,
+            //path: item.path,
+            author: item.author,
           }));
           setTitles(resultado);
           setShowResults(true);
@@ -119,7 +123,7 @@ export default function SearchBar() {
             <Filtros data={titles} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
           </div>
           <div className="col-sm-8">
-            {showResults && <ShowResults data={titles}/>}
+            {showResults && <ShowResults data={titles} />}
           </div>
         </div>
       </div>

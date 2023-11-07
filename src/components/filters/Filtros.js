@@ -5,18 +5,20 @@ export default function Filtros({ data, selectedFilters, handleFilterChange }) {
   return (
     <div className="filtros-cont">
       <div className="container">
-        <h1 className="card-title">Filtros</h1>
-        {data.map((item) => (
-          <div className="form-check" key={item.titulo}>
+      {data.length > 0 && ( 
+          <h1 className="card-title">Filtros</h1>
+        )}
+        {data.map((item, index) => (
+          <div className="form-check" key={index}>
             <input
               className="form-check-input"
               type="checkbox"
-              id={item.titulo}
-              checked={selectedFilters[item.titulo]}
-              onChange={() => handleFilterChange(item.titulo)}
+              id={item.author}
+              checked={selectedFilters[item.author]}
+              onChange={() => handleFilterChange(item.author)}
             />
-            <label className="form-check-label" htmlFor={item.titulo}>
-              {item.titulo}
+            <label className="form-check-label" htmlFor={item.author}>
+              {item.author}
             </label>
           </div>
         ))}
