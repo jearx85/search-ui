@@ -11,14 +11,14 @@ export default function ShowResults({ data }) {
   return (
     <div className="container">
       <div className="cont-card">
-        {data.map((item, index) => (
-          <div className="card" key={index}>
-            <h5 className="card-header">{item.titulo}</h5>
+        {data.map(({id, Title, Content, Path}) => (
+          <div className="card" key={id}>
+            <h5 className="card-header">{Title}</h5>
             <div className="card-body">
               <h5 className="card-title">Contenido</h5>
               <p className="card-text">
-                {item.contenido ? (
-                  expanded ? item.contenido : `${item.contenido.slice(0, 500)}...`
+                {Content.raw ? (
+                  expanded ? Content.raw : `${Content.raw.slice(0, 500)}...`
                 ) : (
                   "No hay contenido disponible"
                 )}
@@ -28,8 +28,7 @@ export default function ShowResults({ data }) {
                   {expanded ? 'Leer menos' : 'Leer más'}
                 </button>
               )} */}
-              <p className="card-text">url: <a href={item.path} target="blank">{item.path}</a></p> 
-              {/* <p className="card-text">url: <a href="https://getbootstrap.com/docs/5.3/components/navbar/">https://getbootstrap.com/docs/5.3/components/navbar/</a></p>  */}
+              <p className="card-text">url: <a href={Path} target="blank">{Path}</a></p> 
             </div>
           </div>
         ))}
