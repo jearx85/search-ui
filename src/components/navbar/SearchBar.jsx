@@ -7,55 +7,44 @@ import './SearchBar.css';
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
   const [ data, setData] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
   const [searchValue, setSearchValue] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  //const [titles, setTitles] = useState([]);
-
-//==================================================================
-  const handleFilterChange = (e) => {
-    //console.log(e.target.value)
-
-    // console.log(data.filter((doc) => doc.Extención === e.target.value && `nombre ${e.target.value}`) )
-    data.filter((doc) => console.log(doc.Extención === e.target.value && `nombre ${doc.Title}`))
+  const [filterdocs, setFilterdocs] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
 
 
+//======================= Filtros ===========================================
+  const handleFilterChange = (e, filter = "") => {
+    const docFiltrados = data.filter((doc) => doc.Extención === e.target.value);
+ 
+    setIsChecked(e.target.checked)
 
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [filter]: !prevFilters[filter],
+    }));
 
-
-    // setSelectedFilters((prevFilters) => ({
-    //   ...prevFilters,
-    //   [filter]: !prevFilters[filter],
-    // }));
-
-    // // const filtered = data.filter((item) =>
-    // //    selectedFilters[filter] ? item.Extención === filter : true
-    // // );
-
-    // if (!selectedFilters[filter]) {
-    //   console.log(`Checkbox seleccionado: ${filter}`);
-    // }
-    // setFilteredData(filtered);
+    setFilterdocs(docFiltrados);
+ 
   };
   const extensions = data.map(item => item.Extención);
   const uniqueData = [...new Set(extensions)];
-  // const filteredTitles = titles.filter((Categorias) => Categorias !== undefined);
 
-//===========================================================================
+//=========================== Hacer petición y setear datos ================================================
 
 const handleSearch = (event) => {
     event.preventDefault();
     const valorBusqueda = document.getElementById("search-box").value
     if(!valorBusqueda) return;//Validar input vacío.
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
 
-    var raw = JSON.stringify({
+    const raw = JSON.stringify({
       "query": valorBusqueda
     });
 
-    var requestOptions = {
+    const requestOptions = {
       method: 'POST',
       headers: myHeaders,
       body: raw,
@@ -86,7 +75,7 @@ const handleSearch = (event) => {
         console.error('Error:', error);
       });
   };
-
+//===================================================================
   return (
     <div>
       <nav className="navbar fixed-top bg-body-tertiary">
@@ -118,7 +107,9 @@ const handleSearch = (event) => {
             <Filtros data={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
           </div>
           <div className="col-sm-9">
-            {showResults && <ShowResults data={data} />}
+            {/* {showResults && <ShowResults data={data}/>} 
+            {filterdocs && <ShowResults data={filterdocs}/>} */}
+            {isChecked ? <ShowResults data={filterdocs}/> :  <ShowResults data={data}/>} 
           </div>
         </div>
       </div>
