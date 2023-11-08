@@ -2,7 +2,7 @@ import React from 'react';
 import './Filtros.css';
 
 export default function Filtros({ data, selectedFilters, handleFilterChange }) {
-  console.log(data)
+  
   return (
     <>
     {data.length > 0 && ( 
@@ -18,9 +18,11 @@ export default function Filtros({ data, selectedFilters, handleFilterChange }) {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  name ="filtrar"
+                  value={data[index]}
                   id={item.Extención}
                   checked={selectedFilters[item.Extención]}
-                  onChange={() => handleFilterChange(data[index])}
+                  onChange={handleFilterChange}
                 />
                 <label className="form-check-label" htmlFor={item.Extención}>
                   {data[index]}

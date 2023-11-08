@@ -9,17 +9,33 @@ export default function SearchBar() {
   const [ data, setData] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
   //const [titles, setTitles] = useState([]);
 
 //==================================================================
-  const handleFilterChange = (filter) => {
-    setSelectedFilters((prevFilters) => ({
-      prevFilters,
-      [filter]: !prevFilters[filter],
-    }));
-    if (selectedFilters[filter]) {
-      console.log(`Checkbox seleccionado: ${filter}`);
-    }
+  const handleFilterChange = (e) => {
+    //console.log(e.target.value)
+
+    // console.log(data.filter((doc) => doc.Extención === e.target.value && `nombre ${e.target.value}`) )
+    data.filter((doc) => console.log(doc.Extención === e.target.value && `nombre ${doc.Title}`))
+
+
+
+
+
+    // setSelectedFilters((prevFilters) => ({
+    //   ...prevFilters,
+    //   [filter]: !prevFilters[filter],
+    // }));
+
+    // // const filtered = data.filter((item) =>
+    // //    selectedFilters[filter] ? item.Extención === filter : true
+    // // );
+
+    // if (!selectedFilters[filter]) {
+    //   console.log(`Checkbox seleccionado: ${filter}`);
+    // }
+    // setFilteredData(filtered);
   };
   const extensions = data.map(item => item.Extención);
   const uniqueData = [...new Set(extensions)];
@@ -30,6 +46,7 @@ export default function SearchBar() {
 const handleSearch = (event) => {
     event.preventDefault();
     const valorBusqueda = document.getElementById("search-box").value
+    if(!valorBusqueda) return;//Validar input vacío.
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
@@ -88,7 +105,7 @@ const handleSearch = (event) => {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
-              <button className="btn btn-primary" type="button" onClick={handleSearch} onKeyDown={(e) => {console.log(e)}}>
+              <button className="btn btn-primary" type="button" onClick={handleSearch}>
                 Search
               </button>
             </div>
