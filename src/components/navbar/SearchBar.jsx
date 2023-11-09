@@ -7,6 +7,7 @@ import './SearchBar.css';
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
   const [ data, setData] = useState([]);
+  const [ dataNadhis, setDataNadhis] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const [filterdocs, setFilterdocs] = useState([]);
@@ -15,7 +16,7 @@ export default function SearchBar() {
 
 //======================= Filtros ===========================================
   const handleFilterChange = (e, filter = "") => {
-    const docFiltrados = data.filter((doc) => doc.Extención === e.target.value);
+    const docFiltrados = dataNadhis.filter((doc) => doc.Extención === e.target.value);
  
     setIsChecked(e.target.checked)
 
@@ -27,7 +28,7 @@ export default function SearchBar() {
     setFilterdocs(docFiltrados);
  
   };
-  const extensions = data.map(item => item.Extención);
+  const extensions = dataNadhis.map(item => item.Extención);
   const uniqueData = [...new Set(extensions)];
 
 //=========================== Hacer petición y setear datos ================================================
@@ -41,6 +42,14 @@ const handleSearch = (event) => {
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
 
     const raw = JSON.stringify({
+      "search_fields": {
+        "Title": {
+          "weight": 99
+        },
+        "Content":{
+          "weight": 1
+        } 
+      },
       "query": valorBusqueda
     });
 
@@ -50,31 +59,73 @@ const handleSearch = (event) => {
       body: raw,
       redirect: 'follow'
     };
+//============================= Api app search ======================================================      
+    // const url = "http://10.11.230.23:3002/api/as/v1/engines/nadhis-documentos/search";
+    // fetch(url, requestOptions )
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((apiData) => {
+ 
+    //     // const results =  {
+    //     //     id: apiData.results[0].id.raw,
+    //     //     Title: apiData.results[0].Title.raw,
+    //     //     Content: apiData.results[0].Content.raw,
+    //     //     Path: apiData.results[0].Path.raw,
+    //     //     Categorias: apiData.results[0].Categorias.raw,
+    //     //     Extención: apiData.results[0].Extención.raw,
+    //     //   }
+    //     //   console.log(results.Title)
+       
       
-    const url = "http://10.11.230.23:3002/api/as/v1/engines/nadhis-documentos/search";
-    fetch(url, requestOptions )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((apiData) => {
-        const results = apiData.results.map((item) => ({
-          id: item.id.raw,
-          Title: item.Title.raw,
-          Content: item.Content.raw,
-          Path: item.Path.raw,
-          Categorias: item.Categorias.raw,
-          Extención: item.Extención.raw,
-        }));
-        setData(results);
-        setShowResults(true);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    //     const results = apiData.results.map((item) => ({
+    //       id: item.id.raw,
+    //       Title: item.Title.raw,
+    //       Content: item.Content.raw,
+    //       Path: item.Path.raw,
+    //       Categorias: item.Categorias.raw,
+    //       Extención: item.Extención.raw,
+    //     }));
+    //     setData(results);
+    //     setShowResults(true);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //   });
+
+//====================== Api Nadhis ===========================================
+      const urlNdhis = `http://192.168.50.230:8087/query2/${valorBusqueda}`;
+      fetch(urlNdhis)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((docsData) => {
+          // console.log(docsData)
+          const results = docsData.hits.map((item) => ({
+            id: item._id,
+            Title: item._source.Title,
+            Content: item._source.Content,
+            Path: item._source.Path,
+            Categorias: item._source.Categorias,
+            Extención: item._source.Extención,
+          }));
+          // console.log(results)
+          setDataNadhis(results);
+          setShowResults(true);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
   };
+
+
+
 //===================================================================
   return (
     <div>
@@ -109,7 +160,7 @@ const handleSearch = (event) => {
           <div className="col-sm-9">
             {/* {showResults && <ShowResults data={data}/>} 
             {filterdocs && <ShowResults data={filterdocs}/>} */}
-            {isChecked ? <ShowResults data={filterdocs}/> :  <ShowResults data={data}/>} 
+            {isChecked ? <ShowResults data={filterdocs}/> :  showResults && <ShowResults data={dataNadhis} />} 
           </div>
         </div>
       </div>

@@ -9,3 +9,15 @@
 .form-text{
     margin-bottom: 10px;
 }
+
+.filtros-cont2{
+    margin-top: 50px;
+    border: 1px solid rgb(211, 209, 209);
+    border-radius: 20px;
+    padding: 10px;
+  
+}
+
+.mi-container{
+    align-items: left;
+}

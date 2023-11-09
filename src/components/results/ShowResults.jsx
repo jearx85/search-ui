@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './ShowResults.css';
 
-export default function ShowResults({ data}) {
+export default function ShowResults({ data }) {
+  //console.log(data)
   const [expanded] = useState(false);
+
 
   return (
     <div className="container">
