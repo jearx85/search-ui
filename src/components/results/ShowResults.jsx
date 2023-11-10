@@ -22,7 +22,7 @@ export default function ShowResults({ data }) {
                 )}
               </p>
               <p className="card-text"> <a href={Path} target="blank">Leer más</a></p> 
-              <p className="card-text">Extención: {Extención}</p>
+              <p className="card-text">Extensión: {Extención}</p>
             </div>
           </div>
         ))}

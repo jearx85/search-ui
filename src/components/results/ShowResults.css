@@ -7,4 +7,11 @@
 .card {
     margin-top: 90px;
     box-shadow: 10px 15px 5px rgb(87, 86, 86);
-  }
+}
+
+@media (width < 768px) {
+    .card {
+        margin-top: 0%;
+        margin-bottom: 20%;
+    }
+}

@@ -6,7 +6,7 @@ import './SearchBar.css';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
-  const [ data, setData] = useState([]);
+  // const [ data, setData] = useState([]);
   const [ dataNadhis, setDataNadhis] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchValue, setSearchValue] = useState('');
@@ -28,8 +28,8 @@ export default function SearchBar() {
     setFilterdocs(docFiltrados);
  
   };
-  const extensions = dataNadhis.map(item => item.Extención);
-  const uniqueData = [...new Set(extensions)];
+  // const extensions = dataNadhis.map(item => item.Extención);
+  // const uniqueData = [...new Set(extensions)];
 
 //=========================== Hacer petición y setear datos ================================================
 
@@ -128,25 +128,27 @@ const handleSearch = (event) => {
 
 //===================================================================
   return (
-    <div>
+    <>
       <nav className="navbar fixed-top bg-body-tertiary">
         <div className="container-fluid">
           <div className="imagen">
-            <img src={logo} alt="Logo" width="140" height="50" />
+            <a href="/">
+              <img src={logo} alt="Logo" width="140" height="50" />
+            </a>
           </div>
           <form className="d-flex custom-form" onSubmit={handleSearch}>
-            <div className="input-group">
+            <div className="d-flex busqueda-main">
               <input
                 id="search-box"
                 className="form-control me-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Buscar"
                 aria-label="Search"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
-              <button className="btn btn-primary" type="button" onClick={handleSearch}>
-                Search
+              <button className="btn-search" type="button" onClick={handleSearch}>
+                Buscar
               </button>
             </div>
           </form>
@@ -154,16 +156,14 @@ const handleSearch = (event) => {
       </nav>
       <div className="container">
         <div className="row">
-          <div className="col-md-3">
-            <Filtros data={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
+          <div className="col-sm-3">
+            <Filtros data={dataNadhis} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
           </div>
           <div className="col-sm-9">
-            {/* {showResults && <ShowResults data={data}/>} 
-            {filterdocs && <ShowResults data={filterdocs}/>} */}
             {isChecked ? <ShowResults data={filterdocs}/> :  showResults && <ShowResults data={dataNadhis} />} 
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

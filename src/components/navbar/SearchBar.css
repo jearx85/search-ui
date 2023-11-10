@@ -3,3 +3,36 @@
     margin: 0; /* Elimina márgenes para ajustar al contenedor */
     padding: 10px; /* Elimina relleno para ajustar al contenedor */
 }
+
+.btn-search{
+    background-color: rgb(238, 237, 237);
+    border: 1px solid rgb(214, 212, 212);
+    border-radius: 7px;
+}
+
+.btn-search:hover{
+    background-color: rgb(187, 185, 185);
+    border: 1px solid rgb(214, 212, 212);
+}
+
+.busqueda-main{
+    width: 70%;
+}
+
+.imagen{
+    margin-left: 15px;
+}
+
+.nav-search{
+    display: flex;
+    gap: calc(4.5vw);
+    /* justify-content: space-between; */
+    margin: 0 auto;
+    max-width: 1800px;
+}
+
+@media (width < 1424px) {
+    .container-fluid {
+        justify-content: center !important;
+    }
+}

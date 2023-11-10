@@ -2,6 +2,20 @@ import React from 'react';
 import './Filtros.css';
 
 export default function Filtros({ data, selectedFilters, handleFilterChange }) {
+
+  const extensions = data.map(item => item.Extención);
+  const uniqueData = [...new Set(extensions)];
+
+  const resultados = {}
+
+  extensions.forEach((ext)=> {
+      if(resultados[ext]){
+          resultados[ext]++;
+      }else{
+          resultados[ext] = 1
+      }
+  })
+
   return (
     <>
     {data.length > 0 && ( 
@@ -12,24 +26,24 @@ export default function Filtros({ data, selectedFilters, handleFilterChange }) {
                 <h3 className="card-title">Filtros</h3>
                 <hr/>
                 <div className="form-text">Filtrar por extensión</div> 
-                {data.map((item, index) => (
+                {uniqueData.map((item, index) => (
                   <div className="form-check" key={index}>
                     <input
                       className="form-check-input"
                       type="checkbox"
                       name ="filtrar"
-                      value={data[index]}
+                      value={uniqueData[index]}
                       id={item.Extención}
                       checked={selectedFilters[item.Extención]}
-                      onChange={(e) => handleFilterChange(e, data[index])}
+                      onChange={(e) => handleFilterChange(e, uniqueData[index])}
               
                     />
                     <div className="d-flex justify-content-between">
                       <label className="form-check-label" htmlFor={item.Extención}>
-                        {data[index]} 
+                        {uniqueData[index]} 
                       </label>
                       <label className="check-label" htmlFor={item.Extención}>
-                        {/* {data.length} */}
+                        {resultados[item]}
                       </label>
                     </div>
                   </div>
