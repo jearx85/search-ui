@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import logo from '../../img/logo-nadhis.png';
 import ShowResults from '../results/ShowResults';
 import Filtros from '../filters/Filtros';
@@ -13,6 +14,9 @@ export default function SearchBar() {
   const [filterdocs, setFilterdocs] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const valorHome = searchParams.get('search');
 
 //======================= Filtros ===========================================
   const handleFilterChange = (e, filter = "") => {
@@ -30,6 +34,40 @@ export default function SearchBar() {
   };
   // const extensions = dataNadhis.map(item => item.Extención);
   // const uniqueData = [...new Set(extensions)];
+  
+  //=============================================================================
+  useEffect(() => {
+    if (valorHome) {
+      // Realiza la búsqueda con el valor de "searchValue"
+      // Actualiza el estado de los resultados en este componente
+      const urlNdhis = `http://192.168.50.230:8087/query2/${valorHome}`;
+    fetch(urlNdhis)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((docsData) => {
+        // console.log(docsData)
+        const results = docsData.hits.map((item) => ({
+          id: item._id,
+          Title: item._source.Title,
+          Content: item._source.Content,
+          Path: item._source.Path,
+          Categorias: item._source.Categorias,
+          Extención: item._source.Extención,
+        }));
+        // console.log(results)
+        setDataNadhis(results);
+        setShowResults(true);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+  }, [valorHome]);    
+
 
 //=========================== Hacer petición y setear datos ================================================
 
@@ -41,24 +79,24 @@ const handleSearch = (event) => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
 
-    const raw = JSON.stringify({
-      "search_fields": {
-        "Title": {
-          "weight": 99
-        },
-        "Content":{
-          "weight": 1
-        } 
-      },
-      "query": valorBusqueda
-    });
+    // const raw = JSON.stringify({
+    //   "search_fields": {
+    //     "Title": {
+    //       "weight": 99
+    //     },
+    //     "Content":{
+    //       "weight": 1
+    //     } 
+    //   },
+    //   "query": valorBusqueda
+    // });
 
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
+    // const requestOptions = {
+    //   method: 'POST',
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: 'follow'
+    // };
 //============================= Api app search ======================================================      
     // const url = "http://10.11.230.23:3002/api/as/v1/engines/nadhis-documentos/search";
     // fetch(url, requestOptions )
@@ -95,6 +133,7 @@ const handleSearch = (event) => {
     //   .catch((error) => {
     //     console.error('Error:', error);
     //   });
+
 
 //====================== Api Nadhis ===========================================
       const urlNdhis = `http://192.168.50.230:8087/query2/${valorBusqueda}`;
