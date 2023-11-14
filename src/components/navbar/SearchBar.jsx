@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import logo from '../../img/logo-nadhis.png';
 import ShowResults from '../results/ShowResults';
 import Filtros from '../filters/Filtros';
+import { useNavigate } from 'react-router-dom'
 import './SearchBar.css';
 
 export default function SearchBar() {
@@ -13,7 +14,7 @@ export default function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
   const [filterdocs, setFilterdocs] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
-
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const valorHome = searchParams.get('search');
@@ -79,6 +80,7 @@ const handleSearch = (event) => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
 
+    //============================= Api app search ======================================================      
     // const raw = JSON.stringify({
     //   "search_fields": {
     //     "Title": {
@@ -97,7 +99,6 @@ const handleSearch = (event) => {
     //   body: raw,
     //   redirect: 'follow'
     // };
-//============================= Api app search ======================================================      
     // const url = "http://10.11.230.23:3002/api/as/v1/engines/nadhis-documentos/search";
     // fetch(url, requestOptions )
     //   .then((response) => {
@@ -137,6 +138,8 @@ const handleSearch = (event) => {
 
 //====================== Api Nadhis ===========================================
       const urlNdhis = `http://192.168.50.230:8087/query2/${valorBusqueda}`;
+      
+      navigate(`/main?search=${valorBusqueda}`);
       fetch(urlNdhis)
         .then((response) => {
           if (!response.ok) {
