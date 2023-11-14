@@ -8,9 +8,11 @@ export default function Home() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     if(searchValue.trim() === ''){
-      alert('Por favor, ingrese un término de búsqueda');
+      e.preventDefault();
+      return
+      // alert('Por favor, ingrese un término de búsqueda');
        
     }else{
       navigate(`/main?search=${searchValue}`);

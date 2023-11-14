@@ -9,9 +9,32 @@
     box-shadow: 10px 15px 5px rgb(87, 86, 86);
 }
 
-@media (width < 768px) {
-    .card {
-        margin-top: 0%;
-        margin-bottom: 20%;
-    }
+p{
+    font-weight: 400;
+}
+
+.card-button{
+    width: 15%;
+    background-color: rgb(238, 237, 237);
+    border: 1px solid rgb(214, 212, 212);
+    border-radius: 7px;
+    width: max-content ;
+    box-shadow: 5px 5px 5px rgb(87, 86, 86);
+}
+.card-button:hover{
+    background-color: rgb(187, 185, 185);
+    border: 1px solid rgb(214, 212, 212);
+}
+
+.text-button{
+    text-decoration: none;
+    color: black;
+}
+
+@media (max-width: 1000px) {
+  .card{
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+
 }

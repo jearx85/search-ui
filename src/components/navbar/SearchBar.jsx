@@ -169,7 +169,7 @@ const handleSearch = (event) => {
   return (
     <>
       <nav className="navbar fixed-top bg-body-tertiary">
-        <div className="container-fluid">
+        <div className="container-fluid search-bar">
           <div className="imagen">
             <a href="/">
               <img src={logo} alt="Logo" width="140" height="50" />
