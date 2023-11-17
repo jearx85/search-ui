@@ -57,7 +57,6 @@ export default function SearchBar() {
           Categorias: item._source.Categorias,
           Extensión: item._source.Extensión,
         }));
-        console.log("results: "+ results[0].Title)
         setDataNadhis(results);
         setShowResults(true);
       })

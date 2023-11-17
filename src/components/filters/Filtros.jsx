@@ -5,7 +5,6 @@ import Card from "../card/Card";
 
 export default function Filtros({ data, selectedFilters, handleFilterChange }) {
   const extensions = data.map((item) => item.Extensión);
-  console.log("data: "+ data)
   const uniqueData = [...new Set(extensions)];
 
   const resultados = {};
