@@ -12,7 +12,6 @@ export default function Home() {
     if(searchValue.trim() === ''){
       e.preventDefault();
       return
-      // alert('Por favor, ingrese un término de búsqueda');
        
     }else{
       navigate(`/main?search=${searchValue}`);
@@ -26,12 +25,12 @@ export default function Home() {
     </div>
     <div className='home-container '>
         <form className='busqueda'>
-            {/* <input className="form-control form-control-lg input-home" type="text" aria-label="form-control" /> */}
             <input
             className="form-control form-control-lg input-home"
             type="text"
             aria-label="form-control"
             value={searchValue}
+            placeholder = "Busca "
             onChange={(e) => setSearchValue(e.target.value)}
           />
             <div className='boton'>

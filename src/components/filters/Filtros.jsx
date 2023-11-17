@@ -4,7 +4,8 @@ import "./Filtros.css";
 import Card from "../card/Card";
 
 export default function Filtros({ data, selectedFilters, handleFilterChange }) {
-  const extensions = data.map((item) => item.Extención);
+  const extensions = data.map((item) => item.Extensión);
+  console.log("data: "+ data)
   const uniqueData = [...new Set(extensions)];
 
   const resultados = {};
@@ -20,7 +21,7 @@ export default function Filtros({ data, selectedFilters, handleFilterChange }) {
   return (
     <>
       {data.length > 0 && (
-        <>
+      
           <div className="mi-container">
             <div className="filtros-cont">
               {/* ========================== Offcanvas =====================================*/}
@@ -68,7 +69,7 @@ export default function Filtros({ data, selectedFilters, handleFilterChange }) {
               </div>
             </div>
           </div>
-        </>
+       
       )}
     </>
   );

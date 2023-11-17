@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './ShowResults.css';
+import Pdf from '../readDocs/ReadDocs';
 
 export default function ShowResults({ data }) {
-  //console.log(data)
   const [expanded] = useState(false);
 
 
@@ -21,7 +21,9 @@ export default function ShowResults({ data }) {
                   "No hay contenido disponible"
                 )}
               </p>
-              <button className="card-button"> <a className="text-button" href={Path} target="blank">Leer más</a></button> 
+              {/* <button className="card-button"> <a className="text-button" href={Path} target="blank">Leer más</a></button>  */}
+              <button className="card-button"><a className="text-button" href="./pdf" target="_blank">Leer más</a> </button>
+              {/* <Pdf data={Path} /> */}
             </div>
           </div>
         ))}

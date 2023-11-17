@@ -4,6 +4,7 @@ import logo from '../../img/logo-nadhis.png';
 import ShowResults from '../results/ShowResults';
 import Filtros from '../filters/Filtros';
 import { useNavigate } from 'react-router-dom'
+// import Pdf from '../readDocs/ReadDocs';
 import './SearchBar.css';
 
 export default function SearchBar() {
@@ -21,7 +22,7 @@ export default function SearchBar() {
 
 //======================= Filtros ===========================================
   const handleFilterChange = (e, filter = "") => {
-    const docFiltrados = dataNadhis.filter((doc) => doc.Extención === e.target.value);
+    const docFiltrados = dataNadhis.filter((doc) => doc.Extensión === e.target.value);
  
     setIsChecked(e.target.checked)
 
@@ -33,9 +34,7 @@ export default function SearchBar() {
     setFilterdocs(docFiltrados);
  
   };
-  // const extensions = dataNadhis.map(item => item.Extención);
-  // const uniqueData = [...new Set(extensions)];
-  
+
   //=============================================================================
   useEffect(() => {
     if (valorHome) {
@@ -50,16 +49,15 @@ export default function SearchBar() {
         return response.json();
       })
       .then((docsData) => {
-        // console.log(docsData)
         const results = docsData.hits.map((item) => ({
           id: item._id,
           Title: item._source.Title,
           Content: item._source.Content,
           Path: item._source.Path,
           Categorias: item._source.Categorias,
-          Extención: item._source.Extención,
+          Extensión: item._source.Extensión,
         }));
-        // console.log(results)
+        console.log("results: "+ results[0].Title)
         setDataNadhis(results);
         setShowResults(true);
       })
@@ -115,7 +113,7 @@ const handleSearch = (event) => {
     //     //     Content: apiData.results[0].Content.raw,
     //     //     Path: apiData.results[0].Path.raw,
     //     //     Categorias: apiData.results[0].Categorias.raw,
-    //     //     Extención: apiData.results[0].Extención.raw,
+    //     //     Extensión: apiData.results[0].Extensión.raw,
     //     //   }
     //     //   console.log(results.Title)
        
@@ -126,7 +124,7 @@ const handleSearch = (event) => {
     //       Content: item.Content.raw,
     //       Path: item.Path.raw,
     //       Categorias: item.Categorias.raw,
-    //       Extención: item.Extención.raw,
+    //       Extensión: item.Extensión.raw,
     //     }));
     //     setData(results);
     //     setShowResults(true);
@@ -148,16 +146,14 @@ const handleSearch = (event) => {
           return response.json();
         })
         .then((docsData) => {
-          // console.log(docsData)
           const results = docsData.hits.map((item) => ({
             id: item._id,
             Title: item._source.Title,
             Content: item._source.Content,
             Path: item._source.Path,
             Categorias: item._source.Categorias,
-            Extención: item._source.Extención,
+            Extensión: item._source.Extensión,
           }));
-          // console.log(results)
           setDataNadhis(results);
           setShowResults(true);
         })
@@ -204,6 +200,7 @@ const handleSearch = (event) => {
           <div className="col-sm-9">
             {isChecked ? <ShowResults data={filterdocs}/> :  showResults && <ShowResults data={dataNadhis} />} 
           </div>
+          {/* <Pdf /> */}
         </div>
       </div>
     </>

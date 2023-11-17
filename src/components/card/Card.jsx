@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Card({ uniqueData, selectedFilters, handleFilterChange, resultados, offcanvas = "" }) {
+  console.log(uniqueData)
   return (
     <div>
         {uniqueData.map((item, index) => (
@@ -11,8 +12,8 @@ export default function Card({ uniqueData, selectedFilters, handleFilterChange, 
             name="filtrar"
             data-bs-dismiss= {offcanvas}
             value={uniqueData[index]}
-            id={item.Extención}
-            checked={selectedFilters[item.Extención]}
+            id={item.Extensión}
+            checked={selectedFilters[item.Extensión]}
             onChange={(e) =>
               handleFilterChange(e, uniqueData[index])
             }
@@ -20,11 +21,11 @@ export default function Card({ uniqueData, selectedFilters, handleFilterChange, 
           <div className="d-flex justify-content-between">
             <label
               className="form-check-label"
-              htmlFor={item.Extención}
+              htmlFor={item.Extensión}
             >
               {uniqueData[index]}
             </label>
-            <label className="check-label" htmlFor={item.Extención}>
+            <label className="check-label" htmlFor={item.Extensión}>
               {resultados[item]}
             </label>
           </div>
