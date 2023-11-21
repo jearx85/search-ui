@@ -30,8 +30,8 @@ export default function Home() {
             type="text"
             aria-label="form-control"
             value={searchValue}
-            placeholder = "Busca "
             onChange={(e) => setSearchValue(e.target.value)}
+            autoFocus={true}
           />
             <div className='boton'>
               <button type="submit" className="btn-home" onClick={handleClick}>

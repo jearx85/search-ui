@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import SearchContext from "../context/SearchContext";
 
-export default function Pdf({data}) {
-    const path = "file://"+data
-    console.log(path)
+export default function Pdf() {
+  const { path } = useContext(SearchContext);
+  console.log("path2", path);
   return (
     <div style={{ position: "absolute", width: "100%", height: "100%" }}>
       <object
