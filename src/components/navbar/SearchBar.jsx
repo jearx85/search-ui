@@ -19,11 +19,11 @@ export default function SearchBar() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const valorHome = searchParams.get('search');
+ 
 
 //======================= Filtros ===========================================
   const handleFilterChange = (e, filter = "") => {
     const docFiltrados = dataNadhis.filter((doc) => doc.Extensión === e.target.value);
- 
     setIsChecked(e.target.checked)
 
     setSelectedFilters((prevFilters) => ({
@@ -193,11 +193,11 @@ const handleSearch = (event) => {
       </nav>
       <div className="container">
         <div className="row">
-          <div className="col-sm-3">
-            <Filtros data={dataNadhis} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} />
+          <div className="col-lg-3">
+            <Filtros data={dataNadhis} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} isChecked={isChecked} />
           </div>
-          <div className="col-sm-9">
-            {isChecked ? <ShowResults data={filterdocs}/> :  showResults && <ShowResults data={dataNadhis} />} 
+          <div className="col-sm-12 col-lg-9">
+            {isChecked ? <ShowResults data={filterdocs} /> :  showResults && <ShowResults data={dataNadhis} />} 
           </div>
           {/* <Pdf /> */}
         </div>

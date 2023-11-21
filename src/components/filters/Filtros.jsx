@@ -1,12 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Filtros.css";
 
 import Card from "../card/Card";
 
-export default function Filtros({ data, selectedFilters, handleFilterChange }) {
+export default function Filtros({ data, selectedFilters, handleFilterChange, isChecked }) {
   const extensions = data.map((item) => item.Extensión);
   const uniqueData = [...new Set(extensions)];
 
+  // const [extensiones, setExtensiones] = useState(uniqueData);
   const resultados = {};
 
   extensions.forEach((ext) => {
@@ -55,7 +56,7 @@ export default function Filtros({ data, selectedFilters, handleFilterChange }) {
                 <div className="offcanvas-filter">
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
-                <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados} offcanvas="offcanvas"/>
+                <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados} isChecked ={isChecked}  offcanvas="offcanvas"/>
                 </div>
 
               </div>
@@ -64,7 +65,7 @@ export default function Filtros({ data, selectedFilters, handleFilterChange }) {
                 <h3 className="card-title">Filtros</h3>
                 <hr />
                 <div className="form-text">Filtrar por extensión</div>
-                <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados}/>
+                <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados} isChecked={isChecked} />
               </div>
             </div>
           </div>
