@@ -1,20 +1,22 @@
-import React, { useContext } from "react";
-import SearchContext from "../context/SearchContext";
+import React from "react";
+import {useParams } from 'react-router-dom';
 
 export default function Pdf() {
-  const { path } = useContext(SearchContext);
-  console.log("path2", path);
+
+  const { ruta } = useParams();
+  console.log(atob(ruta));
+ 
   return (
     <div style={{ position: "absolute", width: "100%", height: "100%" }}>
       <object
-        data={require("file:///C:/Users/user/Downloads/Portafolio_ServiciosWEB_SIATA.pdf")}
+        data={require(atob(ruta))}
         type="application/pdf"
         width="100%"
         height="100%"
       >
         <br />
         <a
-          href={require("file:///C:/Users/user/Downloads/Portafolio_ServiciosWEB_SIATA.pdf")}
+          href={require(atob(ruta))}
           id="enlaceDescargarPdf"
           download="ReactJS.pdf"
         >

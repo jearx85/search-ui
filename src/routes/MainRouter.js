@@ -11,7 +11,7 @@ export default function MainRouter() {
        <Routes>
           <Route path='/' element={ <Home />}/>
           <Route path='/main' element={ <SearchBar />}/>  
-          <Route path='/pdf' element={ <Pdf />}/>  
+          <Route path='/pdf/:ruta' element={ <Pdf />}/>  
        </Routes>
     </BrowserRouter>
   )

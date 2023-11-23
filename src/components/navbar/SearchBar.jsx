@@ -6,7 +6,6 @@ import Filtros from '../filters/Filtros';
 import { useNavigate } from 'react-router-dom'
 // import Pdf from '../readDocs/ReadDocs';
 import './SearchBar.css';
-import SearchContext from '../context/SearchContext';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
@@ -20,7 +19,7 @@ export default function SearchBar() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const valorHome = searchParams.get('search');
-  const [path, setPath] = useState(null);
+  // const [path, setPath] = useState(null);
 
 //======================= Filtros ===========================================
   const handleFilterChange = (e, filter = "") => {
@@ -138,7 +137,7 @@ const handleSearch = (event) => {
       const urlNdhis = `http://192.168.50.230:8087/query2/${valorBusqueda}`;
       
       navigate(`/main?search=${valorBusqueda}`);
-      setPath(urlNdhis);
+      // setPath(urlNdhis);
       fetch(urlNdhis)
         .then((response) => {
           if (!response.ok) {
@@ -170,7 +169,6 @@ const handleSearch = (event) => {
 //===================================================================
   return (
     <>
-    <SearchContext.Provider value={{ path, setPath }}>
       <nav className="navbar fixed-top bg-body-tertiary">
         <div className="container-fluid search-bar">
           <div className="imagen">
@@ -206,7 +204,6 @@ const handleSearch = (event) => {
           </div>
         </div>
       </div>
-          </SearchContext.Provider>
     </>
   );
 }
