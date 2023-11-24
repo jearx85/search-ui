@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './ShowResults.css';
-
-import { Link } from  'react-router-dom';
  export default function ShowResults({ data }) {
   const [expanded] = useState(false);
 
@@ -21,7 +19,7 @@ import { Link } from  'react-router-dom';
                   "No hay contenido disponible"
                 )}
               </p>
-              <button className="card-button"><Link className="text-button" to={ `../pdf/${btoa("file:///"+Path)}`} target="_blank" >Leer más </Link> </button>
+              <button className="card-button"><a className="text-button" href= {`http://localhost:3008/${Path.replace("C:/Users/user/Dropbox/nadhis_pruebas/Folder_monitoring", "")}`} without rel="noreferrer" target="_blank" >Leer más </a> </button>
             </div>
           </div>
         ))}
