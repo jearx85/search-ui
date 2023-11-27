@@ -40,7 +40,7 @@ export default function SearchBar() {
     if (valorHome) {
       // Realiza la búsqueda con el valor de "searchValue"
       // Actualiza el estado de los resultados en este componente
-      const urlNdhis = `http://192.168.50.230:8087/query2/${valorHome}`;
+      const urlNdhis = `http://192.168.50.236:8087/query2/${valorHome}`;
     fetch(urlNdhis)
       .then((response) => {
         if (!response.ok) {
@@ -134,7 +134,7 @@ const handleSearch = (event) => {
 
 
 //====================== Api Nadhis ===========================================
-      const urlNdhis = `http://192.168.50.230:8087/query2/${valorBusqueda}`;
+      const urlNdhis = `http://192.168.50.236:8087/query2/${valorBusqueda}`;
       
       navigate(`/main?search=${valorBusqueda}`);
       // setPath(urlNdhis);
@@ -182,7 +182,6 @@ const handleSearch = (event) => {
                 id="search-box"
                 className="form-control me-2"
                 type="search"
-                placeholder="Buscar"
                 aria-label="Search"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}

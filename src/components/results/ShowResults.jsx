@@ -19,7 +19,7 @@ import './ShowResults.css';
                   "No hay contenido disponible"
                 )}
               </p>
-              <button className="card-button"><a className="text-button" href= {`http://localhost:3008/${Path.replace("C:/Users/user/Dropbox/nadhis_pruebas/Folder_monitoring", "")}`} without rel="noreferrer" target="_blank" >Leer más </a> </button>
+              <button className="card-button"><a className="text-button" href= {`http://localhost:3008/${Path.replace("C:/Users/user/Dropbox/nadhis_pruebas/Folder_monitoring", "")}`} rel="noreferrer" target="_blank" >Ver documento </a> </button>
             </div>
           </div>
         ))}

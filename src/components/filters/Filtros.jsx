@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import "./Filtros.css";
 
 import Card from "../card/Card";
@@ -21,7 +21,6 @@ export default function Filtros({ data, selectedFilters, handleFilterChange, isC
   return (
     <>
       {data.length > 0 && (
-      
           <div className="mi-container">
             <div className="filtros-cont">
               {/* ========================== Offcanvas =====================================*/}
@@ -29,21 +28,25 @@ export default function Filtros({ data, selectedFilters, handleFilterChange, isC
                 className="boton-offcanvas"
                 type="button"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling"
+                // data-bs-target="#offcanvasScrolling"
+                // aria-controls="offcanvasScrolling"
+                data-bs-target="#offcanvasWithBothOptions" 
+                aria-controls="offcanvasWithBothOptions"
               >
                 Filtrar
               </button>
               <div
                 className="offcanvas offcanvas-start"
                 data-bs-scroll="true"
-                data-bs-backdrop="false"
+                data-bs-backdrop="true"
                 tabIndex="-1"
-                id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel"
+                // id="offcanvasScrolling"
+                // aria-labelledby="offcanvasScrollingLabel"
+                id="offcanvasWithBothOptions" 
+                aria-labelledby="offcanvasWithBothOptionsLabel"
               >
                 <div className="offcanvas-header">
-                  <h3 className="card-title">Filtros</h3>
+                  <h3 className="card-title" id="offcanvasWithBothOptionsLabel">Filtros</h3>
                   <hr />
                   <button
                     type="button"
