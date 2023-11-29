@@ -31,6 +31,11 @@ p{
     color: black;
 }
 
+em{
+    background-color: yellow;
+    font-style: normal;
+}
+
 @media (max-width: 991px) {
   .card{
     margin-top: 110px;
