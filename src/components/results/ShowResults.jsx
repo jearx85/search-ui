@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import './ShowResults.css';
+import parse from 'html-react-parser';
+
  export default function ShowResults({ data }) {
   const [expanded] = useState(false);
-
 
   return (
     <div className="container">
       <div className="cont-card">
         {data.map(({id, Title, Content, Path, TitleH ,ContentH}) => (
           <div className="card" key={id}>
-            <h5 className="card-header"> <b>{TitleH ? <span dangerouslySetInnerHTML={{ __html: TitleH }} /> : Title}</b></h5>
+            {/* <h5 className="card-header"> <b>{TitleH ? <span dangerouslySetInnerHTML={{ __html: TitleH }} /> : Title}</b></h5> */}
+            <h5 className="card-header"> <b>{TitleH ? parse(TitleH) : Title}</b></h5>
             <div className="card-body">
               <h5 className="card-title">Contenido</h5>
               <p className="card-text">
                 {ContentH ? (
-                  <span dangerouslySetInnerHTML={{ __html: `${ContentH.slice(0, 200)}...` }} />
+                  parse(`${ContentH.slice(0, 1000)}...` )
                 ) : (
                   expanded ? (
                    Content  

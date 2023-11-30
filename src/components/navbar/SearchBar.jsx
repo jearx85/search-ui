@@ -49,19 +49,57 @@ export default function SearchBar() {
         return response.json();
       })
       .then((docsData) => {
-        const results = docsData.hits.map((item) => ({
-          id: item._id,
-          Title: item._source.Title,
-          Content: item._source.Content,
-          Path: item._source.Path,
-          Categorias: item._source.Categorias,
-          Extensión: item._source.Extensión,
-          TitleH: item.highlight.Title,
-          ContentH: item.highlight.Content,
-        }));
+        const results = docsData.hits.map((item) => {
+          const obj = {
+            id: item._id,
+            Title: item._source.Title,
+            Content: item._source.Content,
+            Path: item._source.Path,
+            Categorias: item._source.Categorias,
+            Extensión: item._source.Extensión,
+            TitleH: item.highlight && item.highlight.Title ? item.highlight.Title[0] : null,
+            ContentH: item.highlight && item.highlight.Content ? item.highlight.Content[0] : null,
+          };
+        
+          return obj;
+        });
+        
         setDataNadhis(results);
         setShowResults(true);
-      })
+        
+        // const results = docsData.hits.map((item) => 
+        // {
+        //   if(item.highlight){
+            
+        //     const obj = ({
+        //       id: item._id,
+        //       Title: item._source.Title,
+        //       Content: item._source.Content,
+        //       Path: item._source.Path,
+        //       Categorias: item._source.Categorias,
+        //       Extensión: item._source.Extensión,
+        //       TitleH: item.highlight.Title[0],
+        //       ContentH: item.highlight.Content[0],
+        //     }) 
+            
+        //     return obj;
+             
+        //   }else{
+        //     const obj =({
+        //       id: item._id,
+        //       Title: item._source.Title,
+        //       Content: item._source.Content,
+        //       Path: item._source.Path,
+        //       Categorias: item._source.Categorias,
+        //       Extensión: item._source.Extensión,
+        //     })
+        //     return obj;
+        //   }
+        // }
+        // );
+        setDataNadhis(results);
+        setShowResults(true);
+    })
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -148,16 +186,20 @@ const handleSearch = (event) => {
           return response.json();
         })
         .then((docsData) => {
-          const results = docsData.hits.map((item) => ({
+        const results = docsData.hits.map((item) => {
+          const obj = {
             id: item._id,
             Title: item._source.Title,
             Content: item._source.Content,
             Path: item._source.Path,
             Categorias: item._source.Categorias,
             Extensión: item._source.Extensión,
-            TitleH: item.highlight.Title,
-            ContentH: item.highlight.Content,
-          }));
+            TitleH: item.highlight && item.highlight.Title ? item.highlight.Title[0] : null,
+            ContentH: item.highlight && item.highlight.Content ? item.highlight.Content[0] : null,
+          };
+        
+          return obj;
+        });
           setDataNadhis(results);
           setShowResults(true);
         })
