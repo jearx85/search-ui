@@ -1,11 +1,16 @@
 import React from "react";
 import "./Filtros.css";
 
-import Card from "../card/Card";
+import Card from "../card/CardExt";
+import CardCategory from "../card/CardCategory";
 
 export default function Filtros({ data, selectedFilters, handleFilterChange, isChecked }) {
   const extensions = data.map((item) => item.Extensión);
   const uniqueData = [...new Set(extensions)];
+
+  const categories = data.map((item) => item.Categorias);
+  const lastPositions = categories.map((array) => array[array.length - 1]);
+  const uniqueCategory = [...new Set(lastPositions)];
 
   // const [extensiones, setExtensiones] = useState(uniqueData);
   const resultados = {};
@@ -15,6 +20,16 @@ export default function Filtros({ data, selectedFilters, handleFilterChange, isC
       resultados[ext]++;
     } else {
       resultados[ext] = 1;
+    }
+  });
+
+  const resultadosCategory = {};
+
+  lastPositions.forEach((ext) => {
+    if (resultadosCategory[ext]) {
+      resultadosCategory[ext]++;
+    } else {
+      resultadosCategory[ext] = 1;
     }
   });
 
@@ -60,15 +75,26 @@ export default function Filtros({ data, selectedFilters, handleFilterChange, isC
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
                 <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados} isChecked ={isChecked}  offcanvas="offcanvas"/>
-                </div>
 
+                <div className="form-text">Filtrar por categorías</div>
+                <hr />
+                <CardCategory uniqueCategory={uniqueCategory} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultadosCategory={resultadosCategory}isChecked={isChecked} offcanvas="offcanvas"/>
+
+                </div>
               </div>
+
               {/* ======================================================================================= */}
               <div className="filtros">
                 <h3 className="card-title">Filtros</h3>
+
                 <hr />
                 <div className="form-text">Filtrar por extensión</div>
                 <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados} isChecked={isChecked} />
+
+                <hr />
+                <div className="form-text">Filtrar por categorías</div>
+                <CardCategory uniqueCategory={uniqueCategory} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultadosCategory={resultadosCategory}isChecked={isChecked} />
+
               </div>
             </div>
           </div>

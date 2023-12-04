@@ -67,38 +67,6 @@ export default function SearchBar() {
         setDataNadhis(results);
         setShowResults(true);
         
-        // const results = docsData.hits.map((item) => 
-        // {
-        //   if(item.highlight){
-            
-        //     const obj = ({
-        //       id: item._id,
-        //       Title: item._source.Title,
-        //       Content: item._source.Content,
-        //       Path: item._source.Path,
-        //       Categorias: item._source.Categorias,
-        //       Extensión: item._source.Extensión,
-        //       TitleH: item.highlight.Title[0],
-        //       ContentH: item.highlight.Content[0],
-        //     }) 
-            
-        //     return obj;
-             
-        //   }else{
-        //     const obj =({
-        //       id: item._id,
-        //       Title: item._source.Title,
-        //       Content: item._source.Content,
-        //       Path: item._source.Path,
-        //       Categorias: item._source.Categorias,
-        //       Extensión: item._source.Extensión,
-        //     })
-        //     return obj;
-        //   }
-        // }
-        // );
-        setDataNadhis(results);
-        setShowResults(true);
     })
       .catch((error) => {
         console.error('Error:', error);
