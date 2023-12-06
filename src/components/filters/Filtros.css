@@ -39,6 +39,13 @@
 
 }
 
+.cardExt, .cardCat{
+    border: 1px solid rgb(211, 209, 209);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
 @media (max-width: 1000px) {
     .filtros{
         display: none;

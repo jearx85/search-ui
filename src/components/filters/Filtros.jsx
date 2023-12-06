@@ -32,7 +32,7 @@ export default function Filtros({ data, handleFilterChange, handleFilterChangeCa
       resultadosCategory[cat] = 1;
     }
   });
-
+//============================================================================
   return (
     <>
       {data.length > 0 && (
@@ -74,31 +74,34 @@ export default function Filtros({ data, handleFilterChange, handleFilterChangeCa
                 <div className="offcanvas-filter">
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
-                <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  offcanvas="offcanvas"/>
+                <div className="cardExt">
+                  <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  offcanvas="offcanvas"/>
+                </div>
 
                 <div className="form-text">Filtrar por categorías</div>
                 <hr />
-                <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory} offcanvas="offcanvas"/>
-
+                <div className="cardCat">
+                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory} offcanvas="offcanvas"/>
+                </div>
                 </div>
               </div>
 
               {/* ======================================================================================= */}
               <div className="filtros">
                 <h3 className="card-title">Filtros</h3>
-
                 <hr />
-                <div className="form-text">Filtrar por extensión</div>
-                <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  />
-
+                <div className="cardExt">
+                  <div className="form-text">Filtrar por extensión</div>
+                  <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  />
+                </div>
                 <hr />
-                <div className="form-text">Filtrar por categorías</div>
-                <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory}  />
-
+                <div className="cardCat">
+                  <div className="form-text">Filtrar por categorías</div>
+                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory}  />
+                </div>
               </div>
             </div>
           </div>
-       
       )}
     </>
   );
