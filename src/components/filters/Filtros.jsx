@@ -2,17 +2,16 @@ import React from "react";
 import "./Filtros.css";
 
 import Card from "../card/CardExt";
-import CardCategory from "../card/CardCategory";
+import CardCategories from "../card/CardCategory";
 
-export default function Filtros({ data, selectedFilters, handleFilterChange, isChecked }) {
+export default function Filtros({ data, handleFilterChange, handleFilterChangeCat }) {
   const extensions = data.map((item) => item.Extensión);
   const uniqueData = [...new Set(extensions)];
 
   const categories = data.map((item) => item.Categorias);
-  const lastPositions = categories.map((array) => array[array.length - 1]);
-  const uniqueCategory = [...new Set(lastPositions)];
-
-  // const [extensiones, setExtensiones] = useState(uniqueData);
+  // const lastPositions = categories.map((array) => array[array.length - 1]);
+  const uniqueCategory = [...new Set(categories)];
+//==============================================
   const resultados = {};
 
   extensions.forEach((ext) => {
@@ -22,14 +21,14 @@ export default function Filtros({ data, selectedFilters, handleFilterChange, isC
       resultados[ext] = 1;
     }
   });
-
+//=================================================
   const resultadosCategory = {};
 
-  lastPositions.forEach((ext) => {
-    if (resultadosCategory[ext]) {
-      resultadosCategory[ext]++;
+  categories.forEach((cat) => {
+    if (resultadosCategory[cat]) {
+      resultadosCategory[cat]++;
     } else {
-      resultadosCategory[ext] = 1;
+      resultadosCategory[cat] = 1;
     }
   });
 
@@ -74,11 +73,11 @@ export default function Filtros({ data, selectedFilters, handleFilterChange, isC
                 <div className="offcanvas-filter">
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
-                <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados} isChecked ={isChecked}  offcanvas="offcanvas"/>
+                <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  offcanvas="offcanvas"/>
 
                 <div className="form-text">Filtrar por categorías</div>
                 <hr />
-                <CardCategory uniqueCategory={uniqueCategory} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultadosCategory={resultadosCategory}isChecked={isChecked} offcanvas="offcanvas"/>
+                <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory} offcanvas="offcanvas"/>
 
                 </div>
               </div>
@@ -89,11 +88,11 @@ export default function Filtros({ data, selectedFilters, handleFilterChange, isC
 
                 <hr />
                 <div className="form-text">Filtrar por extensión</div>
-                <Card uniqueData={uniqueData} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultados ={resultados} isChecked={isChecked} />
+                <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  />
 
                 <hr />
                 <div className="form-text">Filtrar por categorías</div>
-                <CardCategory uniqueCategory={uniqueCategory} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} resultadosCategory={resultadosCategory}isChecked={isChecked} />
+                <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory}  />
 
               </div>
             </div>

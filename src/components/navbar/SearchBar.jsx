@@ -9,21 +9,22 @@ import './SearchBar.css';
 
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
-  // const [ data, setData] = useState([]);
   const [ dataNadhis, setDataNadhis] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
+  const [selectedFiltersCat, setSelectedFiltersCat] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const [filterdocs, setFilterdocs] = useState([]);
+  // const [filterDocsCat, setfilterDocsCat] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const valorHome = searchParams.get('search');
-  // const [path, setPath] = useState(null);
 
 //======================= Filtros ===========================================
   const handleFilterChange = (e, filter = "") => {
     const docFiltrados = dataNadhis.filter((doc) => doc.Extensión === e.target.value);
+
     setIsChecked(e.target.checked)
 
     setSelectedFilters((prevFilters) => ({
@@ -32,6 +33,19 @@ export default function SearchBar() {
     }));
 
     setFilterdocs(docFiltrados);
+ 
+  };
+  //----------------------------------------------------
+  const handleFilterChangeCat = (e, filter = "") => {
+console.log(dataNadhis)
+    const docFiltradosCat = dataNadhis.filter((doc) => doc.Categorias === e.target.value);
+    setIsChecked(e.target.checked)
+    setSelectedFiltersCat((prevFilters) => ({
+      ...prevFilters,
+      [filter]: !prevFilters[filter],
+    }
+    ));
+    setFilterdocs(docFiltradosCat);
  
   };
 
@@ -55,7 +69,7 @@ export default function SearchBar() {
             Title: item._source.Title,
             Content: item._source.Content,
             Path: item._source.Path,
-            Categorias: item._source.Categorias,
+            Categorias: item._source.Categorias.pop(),
             Extensión: item._source.Extensión,
             TitleH: item.highlight && item.highlight.Title ? item.highlight.Title[0] : null,
             ContentH: item.highlight && item.highlight.Content ? item.highlight.Content[0] : null,
@@ -85,62 +99,7 @@ const handleSearch = (event) => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
 
-    //============================= Api app search ======================================================      
-    // const raw = JSON.stringify({
-    //   "search_fields": {
-    //     "Title": {
-    //       "weight": 99
-    //     },
-    //     "Content":{
-    //       "weight": 1
-    //     } 
-    //   },
-    //   "query": valorBusqueda
-    // });
-
-    // const requestOptions = {
-    //   method: 'POST',
-    //   headers: myHeaders,
-    //   body: raw,
-    //   redirect: 'follow'
-    // };
-    // const url = "http://10.11.230.23:3002/api/as/v1/engines/nadhis-documentos/search";
-    // fetch(url, requestOptions )
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((apiData) => {
  
-    //     // const results =  {
-    //     //     id: apiData.results[0].id.raw,
-    //     //     Title: apiData.results[0].Title.raw,
-    //     //     Content: apiData.results[0].Content.raw,
-    //     //     Path: apiData.results[0].Path.raw,
-    //     //     Categorias: apiData.results[0].Categorias.raw,
-    //     //     Extensión: apiData.results[0].Extensión.raw,
-    //     //   }
-    //     //   console.log(results.Title)
-       
-      
-    //     const results = apiData.results.map((item) => ({
-    //       id: item.id.raw,
-    //       Title: item.Title.raw,
-    //       Content: item.Content.raw,
-    //       Path: item.Path.raw,
-    //       Categorias: item.Categorias.raw,
-    //       Extensión: item.Extensión.raw,
-    //     }));
-    //     setData(results);
-    //     setShowResults(true);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
-
-
 //====================== Api Nadhis ===========================================
       const urlNdhis = `http://localhost:8000/query2/${valorBusqueda}`;
       
@@ -160,12 +119,12 @@ const handleSearch = (event) => {
             Title: item._source.Title,
             Content: item._source.Content,
             Path: item._source.Path,
-            Categorias: item._source.Categorias,
+            Categorias: item._source.Categorias.pop(),
             Extensión: item._source.Extensión,
             TitleH: item.highlight && item.highlight.Title ? item.highlight.Title[0] : null,
             ContentH: item.highlight && item.highlight.Content ? item.highlight.Content[0] : null,
           };
-        
+
           return obj;
         });
           setDataNadhis(results);
@@ -174,11 +133,7 @@ const handleSearch = (event) => {
         .catch((error) => {
           console.error('Error:', error);
         });
-
-
   };
-
-
 
 //===================================================================
   return (
@@ -210,10 +165,10 @@ const handleSearch = (event) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-3">
-            <Filtros data={dataNadhis} selectedFilters={selectedFilters} handleFilterChange={handleFilterChange} isChecked={isChecked} />
+            <Filtros data={dataNadhis} handleFilterChange={handleFilterChange} handleFilterChangeCat={handleFilterChangeCat} />
           </div>
           <div className="col-sm-12 col-lg-9">
-            {isChecked ? <ShowResults data={filterdocs} /> :  showResults && <ShowResults data={dataNadhis} />} 
+            {isChecked ? <ShowResults data={filterdocs}/> :  showResults && <ShowResults data={dataNadhis} />} 
           </div>
         </div>
       </div>
