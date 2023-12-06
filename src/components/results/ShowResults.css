@@ -32,8 +32,12 @@ p{
 }
 
 em{
-    background-color: yellow;
+    background-color: rgb(192, 206, 245);
     font-style: normal;
+    font-weight: 450;
+    color: rgb(77, 77, 247);
+    padding: 1px;
+    border-radius: 5px;
 }
 
 @media (max-width: 991px) {
