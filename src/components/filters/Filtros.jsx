@@ -5,13 +5,11 @@ import Card from "../card/CardExt";
 import CardCategories from "../card/CardCategory";
 
 export default function Filtros({ data, handleFilterChange, handleFilterChangeCat }) {
+//================= Filtro Extensiones ================================
+
   const extensions = data.map((item) => item.Extensión);
   const uniqueData = [...new Set(extensions)];
 
-  const categories = data.map((item) => item.Categorias);
-  // const lastPositions = categories.map((array) => array[array.length - 1]);
-  const uniqueCategory = [...new Set(categories)];
-//==============================================
   const resultados = {};
 
   extensions.forEach((ext) => {
@@ -21,7 +19,10 @@ export default function Filtros({ data, handleFilterChange, handleFilterChangeCa
       resultados[ext] = 1;
     }
   });
-//=================================================
+//================= Filtro categorias ================================
+
+  const categories = data.map((item) => item.Categorias);
+  const uniqueCategory = [...new Set(categories)];
   const resultadosCategory = {};
 
   categories.forEach((cat) => {

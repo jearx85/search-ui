@@ -22,6 +22,7 @@ export default function SearchBar() {
   const valorHome = searchParams.get('search');
 
 //======================= Filtros ===========================================
+//------------------------ Extensiones ----------------------------
   const handleFilterChange = (e, filter = "") => {
     const docFiltrados = dataNadhis.filter((doc) => doc.Extensión === e.target.value);
 
@@ -35,9 +36,8 @@ export default function SearchBar() {
     setFilterdocs(docFiltrados);
  
   };
-  //----------------------------------------------------
+  //------------------- Categorías ---------------------------------
   const handleFilterChangeCat = (e, filter = "") => {
-console.log(dataNadhis)
     const docFiltradosCat = dataNadhis.filter((doc) => doc.Categorias === e.target.value);
     setIsChecked(e.target.checked)
     setSelectedFiltersCat((prevFilters) => ({
