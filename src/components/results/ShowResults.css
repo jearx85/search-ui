@@ -40,6 +40,16 @@ em{
     border-radius: 5px;
 }
 
+.pagination{
+    justify-content: center;
+    display: flex;
+    margin-top: 25px;
+}
+
+.page-link{
+    color: black
+}
+
 @media (max-width: 991px) {
   .card{
     margin-top: 110px;
