@@ -14,6 +14,9 @@ export default function ShowResults({ data }) {
     setCurrentPage(pageNumber);
   };
 
+  const shouldShowPagination = data.length > documentsPerPage;
+
+
   return (
     <div className="container">
       <div className="cont-card">
@@ -43,6 +46,7 @@ export default function ShowResults({ data }) {
           </div>
         ))}
       </div>
+      {shouldShowPagination && (
       <div className="pagination">
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">
@@ -68,6 +72,7 @@ export default function ShowResults({ data }) {
           </ul>
         </nav>
       </div>
+      )}
     </div>
   );
 }

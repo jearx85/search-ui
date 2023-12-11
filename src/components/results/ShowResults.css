@@ -1,7 +1,9 @@
 .cont-card{
     /* margin: 50px 0 20px; */
-    padding: 10px;
-    
+    padding: 10px; 
+    &:last-child{
+        margin-bottom: 80px;
+    }
 }
 
 .card {

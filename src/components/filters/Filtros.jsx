@@ -5,33 +5,26 @@ import Card from "../card/CardExt";
 import CardCategories from "../card/CardCategory";
 
 export default function Filtros({ data, handleFilterChange }) {
+  
 //================= Filtro Extensiones ================================
+function getNameFilter(name) {
+  const extensions = data.map((item) => item[name]);
+    const uniqueData = [...new Set(extensions)];
+  
+    const resultados = {};
+  
+    extensions.forEach((ext) => {
+      if (resultados[ext]) {
+        resultados[ext]++;
+      } else {
+        resultados[ext] = 1;
+      }
+    });
+    return [uniqueData, resultados];
+}  
+const datos = getNameFilter("Extensión")
+const datosCat = getNameFilter("Categorias")
 
-  const extensions = data.map((item) => item.Extensión);
-  const uniqueData = [...new Set(extensions)];
-
-  const resultados = {};
-
-  extensions.forEach((ext) => {
-    if (resultados[ext]) {
-      resultados[ext]++;
-    } else {
-      resultados[ext] = 1;
-    }
-  });
-//================= Filtro categorias ================================
-
-  const categories = data.map((item) => item.Categorias);
-  const uniqueCategory = [...new Set(categories)];
-  const resultadosCategory = {};
-
-  categories.forEach((cat) => {
-    if (resultadosCategory[cat]) {
-      resultadosCategory[cat]++;
-    } else {
-      resultadosCategory[cat] = 1;
-    }
-  });
 //============================================================================
   return (
     <>
@@ -75,13 +68,13 @@ export default function Filtros({ data, handleFilterChange }) {
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
                 <div className="cardExt">
-                  <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  offcanvas="offcanvas"/>
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  offcanvas="offcanvas"/>
                 </div>
 
                 <div className="form-text">Filtrar por categorías</div>
                 <hr />
                 <div className="cardCat">
-                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChange={handleFilterChange} resultados ={resultados} offcanvas="offcanvas"/>
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]} offcanvas="offcanvas"/>
                 </div>
                 </div>
               </div>
@@ -92,12 +85,12 @@ export default function Filtros({ data, handleFilterChange }) {
                 <hr />
                 <div className="cardExt">
                   <div className="form-text">Filtrar por extensión</div>
-                  <Card uniqueData={uniqueData} handleFilterChange={handleFilterChange} resultados ={resultados}  />
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  />
                 </div>
                 <hr />
                 <div className="cardCat">
                   <div className="form-text">Filtrar por categorías</div>
-                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChange={handleFilterChange} resultados ={resultados}  />
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]}  />
                 </div>
               </div>
             </div>

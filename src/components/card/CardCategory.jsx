@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export default function CardCategories({ uniqueCategory, handleFilterChange, resultados, offcanvas = "" }) {
+export default function CardCategories({ uniqueData, handleFilterChange, resultados, offcanvas = "" }) {
 
   const [selectedCategory, setselectedCategory] = useState(null)
 
@@ -13,7 +13,7 @@ export default function CardCategories({ uniqueCategory, handleFilterChange, res
     }
 }
 
-const filteredCategories = selectedCategory ? [selectedCategory] : uniqueCategory
+const filteredCategories = selectedCategory ? [selectedCategory] : uniqueData
 
   return (
     <div>
@@ -28,8 +28,8 @@ const filteredCategories = selectedCategory ? [selectedCategory] : uniqueCategor
             id={item}
             checked={selectedCategory === item}
             onChange={(e) =>{
-              // handleFilterChangeCat(e, uniqueCategory[index])
-              handleFilterChange(e, uniqueCategory[index], "Categorias")
+              // handleFilterChangeCat(e, uniqueData[index])
+              handleFilterChange(e, uniqueData[index], "Categorias")
               handleCheck(item)
               }
             }

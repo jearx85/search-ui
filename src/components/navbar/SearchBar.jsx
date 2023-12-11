@@ -10,8 +10,7 @@ import './SearchBar.css';
 export default function SearchBar() {
   const [showResults, setShowResults] = useState(false);
   const [ dataNadhis, setDataNadhis] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState({});
-  const [selectedFiltersCat, setSelectedFiltersCat] = useState({});
+  const [, setSelectedFilters] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const [filterdocs, setFilterdocs] = useState([]);
   // const [filterDocsCat, setfilterDocsCat] = useState([]);
