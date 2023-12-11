@@ -23,8 +23,9 @@ export default function SearchBar() {
 
 //======================= Filtros ===========================================
 //------------------------ Extensiones ----------------------------
-  const handleFilterChange = (e, filter = "") => {
-    const docFiltrados = dataNadhis.filter((doc) => doc.Extensión === e.target.value);
+  const handleFilterChange = (e, filter = "", filtro) => {
+    // const docFiltrados = dataNadhis.filter((doc) => doc.Extensión === e.target.value);
+    const docFiltrados = dataNadhis.filter((doc) => doc[filtro] === e.target.value);
 
     setIsChecked(e.target.checked)
 
@@ -34,18 +35,6 @@ export default function SearchBar() {
     }));
 
     setFilterdocs(docFiltrados);
- 
-  };
-  //------------------- Categorías ---------------------------------
-  const handleFilterChangeCat = (e, filter = "") => {
-    const docFiltradosCat = dataNadhis.filter((doc) => doc.Categorias === e.target.value);
-    setIsChecked(e.target.checked)
-    setSelectedFiltersCat((prevFilters) => ({
-      ...prevFilters,
-      [filter]: !prevFilters[filter],
-    }
-    ));
-    setFilterdocs(docFiltradosCat);
  
   };
 
@@ -165,7 +154,7 @@ const handleSearch = (event) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-3">
-            <Filtros data={dataNadhis} handleFilterChange={handleFilterChange} handleFilterChangeCat={handleFilterChangeCat} />
+            <Filtros data={dataNadhis} handleFilterChange={handleFilterChange}/>
           </div>
           <div className="col-sm-12 col-lg-9">
             {isChecked ? <ShowResults data={filterdocs}/> :  showResults && <ShowResults data={dataNadhis} />} 

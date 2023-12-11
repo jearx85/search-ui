@@ -28,7 +28,7 @@ const filteredExtensions = selectedExtensions ? [selectedExtensions] : uniqueDat
             id={item}
             checked={selectedExtensions === item}
             onChange={(e) =>{
-              handleFilterChange(e, uniqueData[index])
+              handleFilterChange(e, uniqueData[index], "Extensión")
               handleCheck(item)
               }
             }

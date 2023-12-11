@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export default function CardCategories({ uniqueCategory, handleFilterChangeCat, resultadosCategory, offcanvas = "" }) {
+export default function CardCategories({ uniqueCategory, handleFilterChange, resultados, offcanvas = "" }) {
 
   const [selectedCategory, setselectedCategory] = useState(null)
 
@@ -28,7 +28,8 @@ const filteredCategories = selectedCategory ? [selectedCategory] : uniqueCategor
             id={item}
             checked={selectedCategory === item}
             onChange={(e) =>{
-              handleFilterChangeCat(e, uniqueCategory[index])
+              // handleFilterChangeCat(e, uniqueCategory[index])
+              handleFilterChange(e, uniqueCategory[index], "Categorias")
               handleCheck(item)
               }
             }
@@ -41,7 +42,7 @@ const filteredCategories = selectedCategory ? [selectedCategory] : uniqueCategor
               {item}
             </label>
             <label className="check-label" htmlFor={item}>
-              {resultadosCategory[item]}
+              {resultados[item]}
             </label>
           </div>
         </div>

@@ -4,7 +4,7 @@ import "./Filtros.css";
 import Card from "../card/CardExt";
 import CardCategories from "../card/CardCategory";
 
-export default function Filtros({ data, handleFilterChange, handleFilterChangeCat }) {
+export default function Filtros({ data, handleFilterChange }) {
 //================= Filtro Extensiones ================================
 
   const extensions = data.map((item) => item.Extensión);
@@ -81,7 +81,7 @@ export default function Filtros({ data, handleFilterChange, handleFilterChangeCa
                 <div className="form-text">Filtrar por categorías</div>
                 <hr />
                 <div className="cardCat">
-                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory} offcanvas="offcanvas"/>
+                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChange={handleFilterChange} resultados ={resultados} offcanvas="offcanvas"/>
                 </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function Filtros({ data, handleFilterChange, handleFilterChangeCa
                 <hr />
                 <div className="cardCat">
                   <div className="form-text">Filtrar por categorías</div>
-                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChangeCat={handleFilterChangeCat} resultadosCategory={resultadosCategory}  />
+                  <CardCategories uniqueCategory={uniqueCategory} handleFilterChange={handleFilterChange} resultados ={resultados}  />
                 </div>
               </div>
             </div>
