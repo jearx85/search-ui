@@ -4,10 +4,13 @@
     &:last-child{
         margin-bottom: 80px;
     }
+    &:first-child{
+        margin-top: 70px;
+    }
 }
 
 .card {
-    margin-top: 140px;
+    margin-top: 70px;
     box-shadow: 10px 15px 5px rgb(87, 86, 86);
 }
 
@@ -16,7 +19,6 @@ p{
 }
 
 .card-button{
-    width: 15%;
     background-color: rgb(238, 237, 237);
     border: 1px solid rgb(214, 212, 212);
     border-radius: 7px;
@@ -53,9 +55,11 @@ em{
 }
 
 @media (max-width: 991px) {
-  .card{
-    margin-top: 110px;
-    margin-bottom: 40px;
-  }
-
+    .card{
+        margin-top: 20px;
+        margin-bottom: 40px;
+        &:first-child{
+            margin-top: 5px;
+        }
+      }
 }
