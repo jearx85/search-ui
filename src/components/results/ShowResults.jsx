@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ShowResults.css';
 import parse from 'html-react-parser';
 
-export default function ShowResults({ data }) {
+export default function ShowResults({ data, onNewSearch  }) {
   const documentsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataVersion, ] = useState(0);
 
   const indexOfLastDocument = currentPage * documentsPerPage;
   const indexOfFirstDocument = indexOfLastDocument - documentsPerPage;
@@ -12,7 +13,14 @@ export default function ShowResults({ data }) {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+
+    onNewSearch();
   };
+
+  useEffect(() => {
+    // Cuando los datos cambian, restablecer la página a 1
+    setCurrentPage(1);
+  }, [dataVersion, data]);
 
   const shouldShowPagination = data.length > documentsPerPage;
 

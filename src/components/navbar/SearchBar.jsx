@@ -13,12 +13,19 @@ export default function SearchBar() {
   const [, setSelectedFilters] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const [filterdocs, setFilterdocs] = useState([]);
+  const [, setDataVersion] = useState(0);
   // const [filterDocsCat, setfilterDocsCat] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const valorHome = searchParams.get('search');
+
+
+  const handleNewSearch = () => {
+    // Incrementar la versión de los datos para restablecer la página
+    setDataVersion((prevVersion) => prevVersion + 1);
+  };
 
 //======================= Filtros ===========================================
 //------------------------ Extensiones ----------------------------
@@ -156,7 +163,7 @@ const handleSearch = (event) => {
             <Filtros data={dataNadhis} handleFilterChange={handleFilterChange}/>
           </div>
           <div className="col-sm-12 col-lg-9">
-            {isChecked ? <ShowResults data={filterdocs}/> :  showResults && <ShowResults data={dataNadhis} />} 
+            {isChecked ? <ShowResults data={filterdocs} onNewSearch={handleNewSearch}/> :  showResults && <ShowResults data={dataNadhis} onNewSearch={handleNewSearch}/>} 
           </div>
         </div>
       </div>
