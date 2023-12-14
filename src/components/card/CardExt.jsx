@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 
-export default function Card({ uniqueData, handleFilterChange, resultados, offcanvas = ""  }) {
+export default function Card({ uniqueData, handleFilterChange, resultados, offcanvas = "", setSelectedExtensions, selectedExtensions  }) {
 
-  const [selectedExtensions, setSelectedExtensions] = useState(null)
 
   function handleCheck(extension){
 

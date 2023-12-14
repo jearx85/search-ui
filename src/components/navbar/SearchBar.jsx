@@ -4,7 +4,6 @@ import logo from '../../img/logo-nadhis.png';
 import ShowResults from '../results/ShowResults';
 import Filtros from '../filters/Filtros';
 import { useNavigate } from 'react-router-dom'
-// import Pdf from '../readDocs/ReadDocs';
 import './SearchBar.css';
 
 export default function SearchBar() {
@@ -14,7 +13,6 @@ export default function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
   const [filterdocs, setFilterdocs] = useState([]);
   const [, setDataVersion] = useState(0);
-  // const [filterDocsCat, setfilterDocsCat] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,15 +20,26 @@ export default function SearchBar() {
   const valorHome = searchParams.get('search');
 
 
+  const [selectedExtensions, setSelectedExtensions] = useState(null);
+  const [selectedCategory, setselectedCategory] = useState(null);
+
   const handleNewSearch = () => {
+    resetFilters();
     // Incrementar la versión de los datos para restablecer la página
     setDataVersion((prevVersion) => prevVersion + 1);
   };
 
+  const resetFilters = () => {
+    // Resetear los estados de los filtros
+    setSelectedFilters({});
+    setFilterdocs([]);
+    setIsChecked(false);
+    setSelectedExtensions(null);
+    setselectedCategory(null);
+  };
 //======================= Filtros ===========================================
 //------------------------ Extensiones ----------------------------
   const handleFilterChange = (e, filter = "", filtro) => {
-    // const docFiltrados = dataNadhis.filter((doc) => doc.Extensión === e.target.value);
     const docFiltrados = dataNadhis.filter((doc) => doc[filtro] === e.target.value);
 
     setIsChecked(e.target.checked)
@@ -47,6 +56,7 @@ export default function SearchBar() {
   //=============================================================================
   useEffect(() => {
     if (valorHome) {
+      resetFilters();
       // Realiza la búsqueda con el valor de "searchValue"
       // Actualiza el estado de los resultados en este componente
       const urlNdhis = `http://localhost:8000/query2/${valorHome}`;
@@ -93,8 +103,7 @@ const handleSearch = (event) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
-
- 
+    resetFilters();
 //====================== Api Nadhis ===========================================
       const urlNdhis = `http://localhost:8000/query2/${valorBusqueda}`;
       
@@ -160,7 +169,7 @@ const handleSearch = (event) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-3">
-            <Filtros data={dataNadhis} handleFilterChange={handleFilterChange}/>
+            <Filtros data={dataNadhis} handleFilterChange={handleFilterChange} onNewSearch={handleNewSearch} setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions} selectedCategory={selectedCategory} setselectedCategory={setselectedCategory}/>
           </div>
           <div className="col-sm-12 col-lg-9">
             {isChecked ? <ShowResults data={filterdocs} onNewSearch={handleNewSearch}/> :  showResults && <ShowResults data={dataNadhis} onNewSearch={handleNewSearch}/>} 

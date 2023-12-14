@@ -1,8 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 
-export default function CardCategories({ uniqueData, handleFilterChange, resultados, offcanvas = "" }) {
+export default function CardCategories({ uniqueData, handleFilterChange, resultados, offcanvas = "", setselectedCategory, selectedCategory}) {
 
-  const [selectedCategory, setselectedCategory] = useState(null)
 
   function handleCheck(Category){
 
@@ -28,7 +27,6 @@ const filteredCategories = selectedCategory ? [selectedCategory] : uniqueData
             id={item}
             checked={selectedCategory === item}
             onChange={(e) =>{
-              // handleFilterChangeCat(e, uniqueData[index])
               handleFilterChange(e, uniqueData[index], "Categorias")
               handleCheck(item)
               }

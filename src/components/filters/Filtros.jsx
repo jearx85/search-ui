@@ -4,7 +4,7 @@ import "./Filtros.css";
 import Card from "../card/CardExt";
 import CardCategories from "../card/CardCategory";
 
-export default function Filtros({ data, handleFilterChange }) {
+export default function Filtros({ data, handleFilterChange, setSelectedExtensions, selectedExtensions, selectedCategory, setselectedCategory}) {
   
 //================= Filtro Extensiones ================================
 function getNameFilter(name) {
@@ -36,8 +36,6 @@ const datosCat = getNameFilter("Categorias")
                 className="boton-offcanvas"
                 type="button"
                 data-bs-toggle="offcanvas"
-                // data-bs-target="#offcanvasScrolling"
-                // aria-controls="offcanvasScrolling"
                 data-bs-target="#offcanvasWithBothOptions" 
                 aria-controls="offcanvasWithBothOptions"
               >
@@ -48,8 +46,6 @@ const datosCat = getNameFilter("Categorias")
                 data-bs-scroll="true"
                 data-bs-backdrop="true"
                 tabIndex="-1"
-                // id="offcanvasScrolling"
-                // aria-labelledby="offcanvasScrollingLabel"
                 id="offcanvasWithBothOptions" 
                 aria-labelledby="offcanvasWithBothOptionsLabel"
               >
@@ -68,13 +64,13 @@ const datosCat = getNameFilter("Categorias")
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
                 <div className="cardExt">
-                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  offcanvas="offcanvas"/>
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  offcanvas="offcanvas" setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
                 </div>
 
                 <div className="form-text">Filtrar por categorías</div>
                 <hr />
                 <div className="cardCat">
-                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]} offcanvas="offcanvas"/>
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]} offcanvas="offcanvas" setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
                 </div>
                 </div>
               </div>
@@ -85,12 +81,12 @@ const datosCat = getNameFilter("Categorias")
                 <hr />
                 <div className="cardExt">
                   <div className="form-text">Filtrar por extensión</div>
-                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  />
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
                 </div>
                 <hr />
                 <div className="cardCat">
                   <div className="form-text">Filtrar por categorías</div>
-                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]}  />
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]}  setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
                 </div>
               </div>
             </div>
