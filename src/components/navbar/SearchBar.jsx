@@ -100,12 +100,9 @@ const handleSearch = (event) => {
     event.preventDefault();
     const valorBusqueda = document.getElementById("search-box").value
     if(!valorBusqueda) return;//Validar input vacío.
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");
+    
     resetFilters();
-//====================== Api Nadhis ===========================================
-      const urlNdhis = `http://localhost:8000/query2/${valorBusqueda}`;
+    const urlNdhis = `http://localhost:8000/query2/${valorBusqueda}`;
       
       navigate(`/main?search=${valorBusqueda}`);
       // setPath(urlNdhis);
