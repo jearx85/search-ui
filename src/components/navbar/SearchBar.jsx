@@ -91,7 +91,7 @@ export default function SearchBar() {
         console.error('Error:', error);
       });
     }
-  }, [valorHome]);    
+  }, []);    
 
 
 //=========================== Hacer petición y setear datos ================================================
