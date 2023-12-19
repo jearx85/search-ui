@@ -95,5 +95,11 @@ useEffect(() => {
         console.error('Error:', error);
       });
 
+//==========================================================================
+//header para peticion
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", "Basic Y2l0cmE6Y2l0cjQuMjAyMg==");      
+
 
 ```
