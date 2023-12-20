@@ -1,15 +1,34 @@
 import React from 'react'
 
-export default function Card({ uniqueData, handleFilterChange, resultados, offcanvas = "", setSelectedExtensions, selectedExtensions  }) {
+export default function Card({ uniqueData, handleFilterChange, resultados, offcanvas = "", setSelectedExtensions, selectedExtensions, setselectedCategory }) {
 
 
-  function handleCheck(extension){
+//   function handleCheck(extension){
 
-    if(selectedExtensions === extension){
-      setSelectedExtensions(null)
-    }else{
-      setSelectedExtensions(extension)
-    }
+//     if(selectedExtensions === extension){
+//       setSelectedExtensions(null)
+//     }else{
+//       setSelectedExtensions(extension)
+//     }
+// }
+
+function handleCheck(extension) {
+  if (selectedExtensions === extension) {
+    setSelectedExtensions(null);
+    setselectedCategory(null); // Limpiar la categoría cuando se deselecciona la extensión
+  } else {
+    setSelectedExtensions(extension);
+    // Invoca la función para obtener la categoría correspondiente
+    const correspondingCategory = obtenerCategoriaParaExtension(extension);
+    setselectedCategory(correspondingCategory);
+  }
+}
+
+// Función para obtener la categoría correspondiente a una extensión
+function obtenerCategoriaParaExtension(extension) {
+  // Lógica para encontrar la categoría correspondiente a la extensión
+  const categoria = uniqueData.find(item => item.Extensión === extension)?.Categorias;
+  return categoria || null; // Devuelve null si no se encuentra una categoría
 }
 
 const filteredExtensions = selectedExtensions ? [selectedExtensions] : uniqueData

@@ -6,7 +6,7 @@ import CardCategories from "../card/CardCategory";
 
 export default function Filtros({ data, handleFilterChange, setSelectedExtensions, selectedExtensions, selectedCategory, setselectedCategory}) {
   
-//================= Filtro Extensiones ================================
+
 function getNameFilter(name) {
   const extensions = data.map((item) => item[name]);
     const uniqueData = [...new Set(extensions)];
@@ -25,7 +25,7 @@ function getNameFilter(name) {
 const datos = getNameFilter("Extensión")
 const datosCat = getNameFilter("Categorias")
 
-//============================================================================
+
   return (
     <>
       {data.length > 0 && (
@@ -64,13 +64,13 @@ const datosCat = getNameFilter("Categorias")
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
                 <div className="cardExt">
-                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  offcanvas="offcanvas" setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  offcanvas="offcanvas" setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions} setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
                 </div>
 
                 <div className="form-text">Filtrar por categorías</div>
                 <hr />
                 <div className="cardCat">
-                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]} offcanvas="offcanvas" setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]} offcanvas="offcanvas" setselectedCategory={setselectedCategory} selectedCategory={selectedCategory} setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
                 </div>
                 </div>
               </div>
@@ -81,12 +81,12 @@ const datosCat = getNameFilter("Categorias")
                 <hr />
                 <div className="cardExt">
                   <div className="form-text">Filtrar por extensión</div>
-                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions} setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
                 </div>
                 <hr />
                 <div className="cardCat">
                   <div className="form-text">Filtrar por categorías</div>
-                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]}  setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]}  setselectedCategory={setselectedCategory} selectedCategory={selectedCategory} setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
                 </div>
               </div>
             </div>
