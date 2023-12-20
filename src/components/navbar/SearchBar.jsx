@@ -38,7 +38,6 @@ export default function SearchBar() {
     setselectedCategory(null);
   };
 //======================= Filtros ===========================================
-//------------------------ Extensiones ----------------------------
   const handleFilterChange = (e, filter = "", filtro) => {
     const docFiltrados = dataNadhis.filter((doc) => doc[filtro] === e.target.value);
 
@@ -53,7 +52,7 @@ export default function SearchBar() {
  
   };
 
-  //=========================== Realiza la búsqueda con el valor de "searchValue" ==================================================
+  //=========================== Realiza la búsqueda con el valor de "valorHome" ==================================================
   useEffect(() => {
     if (valorHome) {
       resetFilters();
