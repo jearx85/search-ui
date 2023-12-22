@@ -6,6 +6,21 @@ import CardCategories from "../card/CardCategory";
 
 export default function Filtros({ data, handleFilterChange, setSelectedExtensions, selectedExtensions, selectedCategory, setselectedCategory}) {
   
+function obtenerCategoriaParaExtension(extension) {
+  const item = data.find(item => item.Extensión === extension);
+  return item ? item.Categorias : null;
+}
+
+function handleFilterChangeWrapper(e, value, filterType) {
+  // Llama a la función de manejo del filtro original
+  handleFilterChange(e, value, filterType);
+
+  // Si el filtro es por extensión, actualiza las categorías basadas en la extensión seleccionada
+  if (filterType === "Extensión") {
+    const categoriaCorrespondiente = obtenerCategoriaParaExtension(value);
+    setselectedCategory(categoriaCorrespondiente);
+  }
+}
 
 function getNameFilter(name) {
   const extensions = data.map((item) => item[name]);
@@ -64,13 +79,13 @@ const datosCat = getNameFilter("Categorias")
                 <div className="form-text">Filtrar por extensión</div>
                 <hr />
                 <div className="cardExt">
-                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  offcanvas="offcanvas" setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions} setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChangeWrapper} resultados ={datos[1]}  offcanvas="offcanvas" setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions} setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
                 </div>
 
                 <div className="form-text">Filtrar por categorías</div>
                 <hr />
                 <div className="cardCat">
-                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]} offcanvas="offcanvas" setselectedCategory={setselectedCategory} selectedCategory={selectedCategory} setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChangeWrapper} resultados ={datosCat[1]} offcanvas="offcanvas" setselectedCategory={setselectedCategory} selectedCategory={selectedCategory} setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
                 </div>
                 </div>
               </div>
@@ -81,12 +96,12 @@ const datosCat = getNameFilter("Categorias")
                 <hr />
                 <div className="cardExt">
                   <div className="form-text">Filtrar por extensión</div>
-                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChange} resultados ={datos[1]}  setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions} setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
+                  <Card uniqueData={datos[0]} handleFilterChange={handleFilterChangeWrapper} resultados ={datos[1]}  setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions} setselectedCategory={setselectedCategory} selectedCategory={selectedCategory}/>
                 </div>
                 <hr />
                 <div className="cardCat">
                   <div className="form-text">Filtrar por categorías</div>
-                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChange} resultados ={datosCat[1]}  setselectedCategory={setselectedCategory} selectedCategory={selectedCategory} setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
+                  <CardCategories uniqueData={datosCat[0]} handleFilterChange={handleFilterChangeWrapper} resultados ={datosCat[1]}  setselectedCategory={setselectedCategory} selectedCategory={selectedCategory} setSelectedExtensions={setSelectedExtensions} selectedExtensions={selectedExtensions}/>
                 </div>
               </div>
             </div>
